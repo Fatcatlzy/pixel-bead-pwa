@@ -1,0 +1,550 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="拼豆像素画">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#1a1a2e">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#f5f5f5;font-family:system-ui,-apple-system,sans-serif;color:#333}
+h1{text-align:center;padding:18px 0 4px;font-size:22px;color:#222}
+.sub{text-align:center;color:#888;font-size:12px;margin-bottom:12px}
+.ctrl{max-width:960px;margin:0 auto 10px;padding:12px 16px;background:#fff;border-radius:10px;border:1px solid #e0e0e0;display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end}
+.cg{display:flex;flex-direction:column;gap:2px}
+.cg label{font-size:11px;color:#666;font-weight:500}
+.cg input[type=file]{font-size:12px;max-width:200px}
+.cg input[type=number]{padding:5px 7px;border:1px solid #ccc;border-radius:5px;font-size:13px;width:80px;background:#fafafa}
+.cg input[type=range]{width:110px;padding:0;border:none;background:transparent}
+.range-row{display:flex;align-items:center;gap:6px}
+.range-val{font-size:12px;color:#4a90d9;font-weight:600;min-width:22px}
+.btn{padding:7px 16px;border:none;border-radius:6px;font-size:13px;cursor:pointer;font-weight:600;transition:background .2s}
+.bp{background:#4a90d9;color:#fff}.bp:hover{background:#3a7bc8}
+.be{background:#27ae60;color:#fff;display:none}.be:hover{background:#219a52}
+.be2{background:#e67e22;color:#fff;display:none}.be2:hover{background:#cf6d17}
+.prev{max-width:960px;margin:0 auto 10px;padding:12px;background:#fff;border-radius:10px;border:1px solid #e0e0e0;display:none}
+.prev h2{font-size:14px;margin-bottom:6px;color:#444}
+#origP{max-width:220px;max-height:220px;border-radius:5px;border:1px solid #ddd}
+.pc{max-width:98vw;margin:0 auto;overflow:auto;padding:8px;display:none}
+.pc h2{font-size:14px;margin-bottom:6px;color:#444;padding-left:4px}
+.pc table{border-collapse:collapse;margin:0 auto}
+.pc td{text-align:center;vertical-align:middle;font-weight:700;overflow:hidden;line-height:1}
+.leg{max-width:960px;margin:10px auto;padding:14px;background:#fff;border-radius:10px;border:1px solid #e0e0e0;display:none}
+.leg h2{font-size:14px;margin-bottom:8px;color:#444}
+.ls{width:100%;margin-bottom:10px}
+.ls h3{font-size:12px;color:#555;margin-bottom:4px;padding:4px 8px;background:#f0f0f0;border-radius:4px}
+.lf{display:flex;flex-wrap:wrap;gap:4px}
+.lc{display:flex;align-items:center;gap:4px;padding:2px 7px;background:#f9f9f9;border-radius:4px;font-size:11px;border:1px solid #eee}
+.sw{width:14px;height:14px;border-radius:2px;border:1px solid rgba(0,0,0,.12);flex-shrink:0}
+canvas{display:none}
+.info{font-size:12px;color:#666;margin-top:4px}
+.tip{max-width:960px;margin:0 auto 8px;padding:8px 14px;background:#fffbe6;border:1px solid #ffe58f;border-radius:8px;font-size:12px;color:#8a6d00;display:none}
+.tab-bar{display:flex;gap:0;margin-bottom:8px}
+.tab-btn{padding:6px 18px;border:1px solid #ccc;background:#f0f0f0;cursor:pointer;font-size:13px;font-weight:600;color:#666;border-bottom:none;border-radius:6px 6px 0 0;transition:all .2s}
+.tab-btn.active{background:#fff;color:#4a90d9;border-bottom:1px solid #fff;margin-bottom:-1px;position:relative;z-index:1}
+.tab-content{border:1px solid #ccc;border-radius:0 6px 6px 6px;background:#fff;padding:8px;overflow:auto}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+</style>
+</head>
+<body>
+
+<h1>🫘 拼豆像素画生成器 <span style="font-size:13px;color:#888">MARD 221色</span></h1>
+<p class="sub">数据来源: makebead/craft-color-codes (CC BY 4.0) · A/B/C/D/E/F/G/H/M 九大色系 221色</p>
+
+<div class="ctrl">
+ <div class="cg"><label>📷 选择图片</label><input type="file" id="imgIn" accept="image/*"></div>
+ <div class="cg"><label>横向格子数</label><input type="number" id="gC" value="29" min="5" max="200"></div>
+ <div class="cg"><label>最大色数</label><input type="number" id="mxC" value="40" min="2" max="221"></div>
+ <div class="cg">
+   <label>去噪强度</label>
+   <div class="range-row"><input type="range" id="smLv" min="0" max="6" value="2" step="1"><span class="range-val" id="smLvVal">1.0</span></div>
+ </div>
+ <div class="cg"><label>格子(px)</label><input type="number" id="cS" value="28" min="10" max="60"></div>
+ <div class="cg"><label>字号(px)</label><input type="number" id="fS" value="7" min="3" max="14"></div>
+ <div class="cg"><label>&nbsp;</label><button class="btn bp" id="genB">🎨 生成像素画</button></div>
+ <div class="cg"><label>&nbsp;</label><button class="btn be" id="expB">📥 导出精细版</button></div>
+ <div class="cg"><label>&nbsp;</label><button class="btn be2" id="expB2">📥 导出原始版</button></div>
+</div>
+
+<div class="tip" id="tipBox"></div>
+
+<div class="prev" id="pA"><h2>📌 原图预览</h2><div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap"><img id="origP"><div><p class="info" id="iI"></p></div></div></div>
+
+<div class="pc" id="pC">
+ <div class="tab-bar">
+   <div class="tab-btn active" data-tab="raw">📋 原始像素画</div>
+   <div class="tab-btn" data-tab="refined">✨ 精细化像素画</div>
+ </div>
+ <div class="tab-content">
+   <div class="tab-panel active" id="tab-raw"><table id="pxG_raw"></table></div>
+   <div class="tab-panel" id="tab-refined"><table id="pxG_ref"></table></div>
+ </div>
+</div>
+
+<div class="leg" id="lA_raw" style="display:none">
+ <h2>📊 原始版用量统计 (共 <span id="tB_raw">0</span> 颗，<span id="tC_raw">0</span> 种颜色)</h2>
+ <div id="lG_raw"></div>
+</div>
+<div class="leg" id="lA_ref" style="display:none">
+ <h2>📊 精细版用量统计 (共 <span id="tB_ref">0</span> 颗，<span id="tC_ref">0</span> 种颜色)</h2>
+ <div id="lG_ref"></div>
+</div>
+
+<canvas id="hC"></canvas>
+
+<script>
+const MARD=[
+{id:"A1",n:"Light Amber",r:250,g:244,b:200},{id:"A2",n:"Light Yellow",r:255,g:255,b:213},
+{id:"A3",n:"Yellow",r:254,g:255,b:139},{id:"A4",n:"Amber",r:251,g:237,b:86},
+{id:"A5",n:"Amber",r:244,g:215,b:56},{id:"A6",n:"Orange",r:254,g:172,b:76},
+{id:"A7",n:"Vermilion",r:254,g:139,b:76},{id:"A8",n:"Amber",r:255,g:218,b:69},
+{id:"A9",n:"Vermilion",r:255,g:153,b:91},{id:"A10",n:"Vermilion",r:247,g:124,b:49},
+{id:"A11",n:"Light Amber",r:255,g:221,b:153},{id:"A12",n:"Vermilion",r:254,g:159,b:114},
+{id:"A13",n:"Orange",r:255,g:195,b:101},{id:"A14",n:"Red",r:253,g:84,b:61},
+{id:"A15",n:"Yellow",r:255,g:243,b:101},{id:"A16",n:"Light Yellow",r:255,g:255,b:159},
+{id:"A17",n:"Amber",r:255,g:227,b:110},{id:"A18",n:"Orange",r:254,g:190,b:125},
+{id:"A19",n:"Red",r:253,g:124,b:114},{id:"A20",n:"Amber",r:255,g:213,b:104},
+{id:"A21",n:"Light Amber",r:255,g:227,b:149},{id:"A22",n:"Yellow",r:244,g:245,b:125},
+{id:"A23",n:"Light Vermilion",r:230,g:201,b:183},{id:"A24",n:"Light Yellow",r:247,g:248,b:162},
+{id:"A25",n:"Amber",r:255,g:214,b:125},{id:"A26",n:"Amber",r:255,g:200,b:48},
+{id:"B1",n:"Yellow",r:230,g:238,b:49},{id:"B2",n:"Green",r:99,g:243,b:71},
+{id:"B3",n:"Green",r:158,g:247,b:128},{id:"B4",n:"Deep Green",r:93,g:224,b:53},
+{id:"B5",n:"Deep Green",r:53,g:227,b:82},{id:"B6",n:"Mint",r:101,g:226,b:166},
+{id:"B7",n:"Deep Mint",r:61,g:175,b:128},{id:"B8",n:"Deep Green",r:28,g:156,b:79},
+{id:"B9",n:"Dark Mint",r:39,g:82,b:58},{id:"B10",n:"Mint",r:149,g:211,b:194},
+{id:"B11",n:"Dark Lime",r:93,g:114,b:42},{id:"B12",n:"Dark Mint",r:22,g:111,b:65},
+{id:"B13",n:"Lime",r:202,g:235,b:123},{id:"B14",n:"Lime",r:173,g:233,b:70},
+{id:"B15",n:"Dark Green",r:46,g:81,b:50},{id:"B16",n:"Chartreuse",r:197,g:237,b:156},
+{id:"B17",n:"Deep Lime",r:155,g:177,b:58},{id:"B18",n:"Yellow",r:230,g:238,b:73},
+{id:"B19",n:"Deep Mint",r:36,g:184,b:140},{id:"B20",n:"Light Green",r:194,g:240,b:204},
+{id:"B21",n:"Dark Teal",r:21,g:106,b:107},{id:"B22",n:"Dark Teal",r:11,g:60,b:67},
+{id:"B23",n:"Dark Lime",r:48,g:58,b:33},{id:"B24",n:"Light Yellow",r:238,g:252,b:165},
+{id:"B25",n:"Deep Mint",r:78,g:132,b:109},{id:"B26",n:"Chestnut",r:141,g:122,b:53},
+{id:"B27",n:"Light Chartreuse",r:204,g:225,b:175},{id:"B28",n:"Green",r:158,g:229,b:185},
+{id:"B29",n:"Lime",r:197,g:226,b:84},{id:"B30",n:"Light Lime",r:226,g:252,b:177},
+{id:"B31",n:"Chartreuse",r:176,g:231,b:146},{id:"B32",n:"Deep Lime",r:156,g:171,b:90},
+{id:"C1",n:"Pale Green",r:232,g:255,b:231},{id:"C2",n:"Light Teal",r:169,g:249,b:252},
+{id:"C3",n:"Light Cyan",r:160,g:226,b:251},{id:"C4",n:"Cyan",r:65,g:204,b:255},
+{id:"C5",n:"Deep Cyan",r:1,g:172,b:235},{id:"C6",n:"Sky",r:80,g:170,b:240},
+{id:"C7",n:"Deep Sky",r:54,g:119,b:210},{id:"C8",n:"Deep Sky",r:15,g:84,b:192},
+{id:"C9",n:"Deep Blue",r:50,g:75,b:202},{id:"C10",n:"Cyan",r:62,g:188,b:226},
+{id:"C11",n:"Deep Teal",r:40,g:221,b:222},{id:"C12",n:"Dark Sky",r:28,g:51,b:77},
+{id:"C13",n:"Light Sky",r:205,g:232,b:255},{id:"C14",n:"Light Teal",r:213,g:253,b:255},
+{id:"C15",n:"Deep Teal",r:34,g:196,b:198},{id:"C16",n:"Deep Sky",r:21,g:87,b:168},
+{id:"C17",n:"Deep Teal",r:4,g:209,b:246},{id:"C18",n:"Dark Sky",r:29,g:51,b:68},
+{id:"C19",n:"Deep Cyan",r:24,g:135,b:162},{id:"C20",n:"Deep Sky",r:23,g:109,b:175},
+{id:"C21",n:"Light Sky",r:190,g:221,b:255},{id:"C22",n:"Teal",r:103,g:180,b:190},
+{id:"C23",n:"Light Sky",r:200,g:226,b:255},{id:"C24",n:"Sky",r:124,g:196,b:255},
+{id:"C25",n:"Light Teal",r:169,g:229,b:229},{id:"C26",n:"Deep Cyan",r:60,g:174,b:216},
+{id:"C27",n:"Light Blue",r:211,g:223,b:250},{id:"C28",n:"Light Sky",r:187,g:207,b:237},
+{id:"C29",n:"Deep Blue",r:52,g:72,b:142},
+{id:"D1",n:"Light Blue",r:174,g:180,b:242},{id:"D2",n:"Blue",r:133,g:142,b:221},
+{id:"D3",n:"Deep Blue",r:47,g:84,b:175},{id:"D4",n:"Dark Blue",r:24,g:42,b:132},
+{id:"D5",n:"Deep Purple",r:184,g:67,b:197},{id:"D6",n:"Violet",r:172,g:123,b:222},
+{id:"D7",n:"Deep Violet",r:136,g:84,b:179},{id:"D8",n:"Light Violet",r:226,g:211,b:255},
+{id:"D9",n:"Light Violet",r:213,g:185,b:248},{id:"D10",n:"Dark Violet",r:54,g:24,b:81},
+{id:"D11",n:"Light Blue",r:185,g:186,b:225},{id:"D12",n:"Purple",r:222,g:154,b:212},
+{id:"D13",n:"Deep Magenta",r:185,g:0,b:149},{id:"D14",n:"Deep Purple",r:139,g:39,b:155},
+{id:"D15",n:"Dark Indigo",r:47,g:31,b:144},{id:"D16",n:"Light Indigo",r:227,g:225,b:238},
+{id:"D17",n:"Light Blue",r:196,g:212,b:246},{id:"D18",n:"Violet",r:164,g:94,b:199},
+{id:"D19",n:"Light Purple",r:216,g:195,b:215},{id:"D20",n:"Deep Purple",r:156,g:50,b:178},
+{id:"D21",n:"Dark Purple",r:154,g:0,b:155},{id:"D22",n:"Deep Blue",r:51,g:58,b:149},
+{id:"D23",n:"Pale Violet",r:235,g:218,b:252},{id:"D24",n:"Blue",r:119,g:134,b:229},
+{id:"D25",n:"Deep Blue",r:73,g:79,b:199},{id:"D26",n:"Pale Violet",r:223,g:194,b:248},
+{id:"E1",n:"Light Red",r:253,g:211,b:204},{id:"E2",n:"Light Magenta",r:254,g:192,b:223},
+{id:"E3",n:"Light Magenta",r:255,g:183,b:231},{id:"E4",n:"Magenta",r:232,g:100,b:158},
+{id:"E5",n:"Magenta",r:245,g:81,b:162},{id:"E6",n:"Pink",r:241,g:61,b:116},
+{id:"E7",n:"Deep Magenta",r:198,g:52,b:120},{id:"E8",n:"Pale Pink",r:255,g:219,b:233},
+{id:"E9",n:"Magenta",r:233,g:112,b:204},{id:"E10",n:"Deep Magenta",r:211,g:55,b:147},
+{id:"E11",n:"Light Vermilion",r:252,g:221,b:210},{id:"E12",n:"Magenta",r:247,g:143,b:195},
+{id:"E13",n:"Deep Magenta",r:181,g:0,b:109},{id:"E14",n:"Light Vermilion",r:255,g:209,b:186},
+{id:"E15",n:"Light Pink",r:248,g:199,b:201},{id:"E16",n:"Pale Vermilion",r:255,g:243,b:235},
+{id:"E17",n:"Pale Pink",r:255,g:226,b:234},{id:"E18",n:"Light Pink",r:255,g:199,b:219},
+{id:"E19",n:"Light Pink",r:254,g:186,b:213},{id:"E20",n:"Light Magenta",r:216,g:199,b:209},
+{id:"E21",n:"Pink",r:189,g:157,b:161},{id:"E22",n:"Magenta",r:183,g:133,b:161},
+{id:"E23",n:"Deep Magenta",r:147,g:122,b:141},{id:"E24",n:"Light Purple",r:225,g:188,b:232},
+{id:"F1",n:"Vermilion",r:253,g:149,b:123},{id:"F2",n:"Pink",r:252,g:61,b:70},
+{id:"F3",n:"Red",r:247,g:73,b:65},{id:"F4",n:"Pink",r:252,g:40,b:60},
+{id:"F5",n:"Deep Pink",r:231,g:0,b:47},{id:"F6",n:"Chestnut",r:148,g:54,b:48},
+{id:"F7",n:"Dark Pink",r:151,g:25,b:55},{id:"F8",n:"Deep Pink",r:188,g:0,b:40},
+{id:"F9",n:"Pink",r:226,g:103,b:122},{id:"F10",n:"Chestnut",r:138,g:69,b:38},
+{id:"F11",n:"Espresso",r:90,g:33,b:33},{id:"F12",n:"Pink",r:253,g:78,b:106},
+{id:"F13",n:"Red",r:243,g:87,b:68},{id:"F14",n:"Light Pink",r:255,g:169,b:173},
+{id:"F15",n:"Deep Pink",r:211,g:0,b:34},{id:"F16",n:"Light Vermilion",r:254,g:194,b:166},
+{id:"F17",n:"Vermilion",r:230,g:156,b:121},{id:"F18",n:"Vermilion",r:211,g:124,b:70},
+{id:"F19",n:"Deep Pink",r:193,g:68,b:74},{id:"F20",n:"Red",r:205,g:147,b:145},
+{id:"F21",n:"Light Pink",r:247,g:180,b:198},{id:"F22",n:"Light Pink",r:253,g:192,b:208},
+{id:"F23",n:"Red",r:246,g:126,b:102},{id:"F24",n:"Pink",r:230,g:152,b:170},
+{id:"F25",n:"Red",r:229,g:75,b:79},
+{id:"G1",n:"Light Vermilion",r:255,g:226,b:206},{id:"G2",n:"Light Vermilion",r:255,g:196,b:170},
+{id:"G3",n:"Light Vermilion",r:244,g:195,b:165},{id:"G4",n:"Orange",r:225,g:179,b:131},
+{id:"G5",n:"Orange",r:237,g:176,b:69},{id:"G6",n:"Deep Orange",r:233,g:156,b:23},
+{id:"G7",n:"Brown",r:157,g:91,b:62},{id:"G8",n:"Chestnut",r:117,g:56,b:50},
+{id:"G9",n:"Orange",r:230,g:180,b:131},{id:"G10",n:"Deep Orange",r:217,g:140,b:57},
+{id:"G11",n:"Orange",r:224,g:197,b:147},{id:"G12",n:"Light Orange",r:255,g:200,b:144},
+{id:"G13",n:"Brown",r:183,g:113,b:74},{id:"G14",n:"Brown",r:141,g:97,b:76},
+{id:"G15",n:"Pale Amber",r:252,g:249,b:224},{id:"G16",n:"Light Orange",r:242,g:217,b:186},
+{id:"G17",n:"Chestnut",r:120,g:82,b:75},{id:"G18",n:"Light Orange",r:255,g:228,b:204},
+{id:"G19",n:"Deep Vermilion",r:224,g:121,b:53},{id:"G20",n:"Deep Vermilion",r:169,g:64,b:35},
+{id:"G21",n:"Brown",r:184,g:133,b:88},
+{id:"H1",n:"Pale Violet",r:253,g:251,b:255},{id:"H2",n:"Pale Teal",r:254,g:255,b:255},
+{id:"H3",n:"Silver",r:182,g:177,b:186},{id:"H4",n:"Grey",r:137,g:133,b:140},
+{id:"H5",n:"Dark Grey",r:72,g:70,b:78},{id:"H6",n:"Charcoal",r:47,g:43,b:47},
+{id:"H7",n:"Black",r:0,g:0,b:0},{id:"H8",n:"Pale Muted Red",r:231,g:214,b:219},
+{id:"H9",n:"White",r:237,g:237,b:237},{id:"H10",n:"Pale Muted Red",r:238,g:233,b:234},
+{id:"H11",n:"Off White",r:206,g:205,b:213},{id:"H12",n:"Pale Orange",r:255,g:245,b:237},
+{id:"H13",n:"Pale Yellow",r:245,g:236,b:210},{id:"H14",n:"Off White",r:207,g:215,b:211},
+{id:"H15",n:"Light Grey",r:152,g:166,b:168},{id:"H16",n:"Deep Muted Red",r:29,g:20,b:20},
+{id:"H17",n:"Pale Muted Red",r:241,g:237,b:237},{id:"H18",n:"Pale Yellow",r:255,g:253,b:240},
+{id:"H19",n:"Pale Orange",r:246,g:239,b:226},{id:"H20",n:"Light Grey",r:148,g:159,b:163},
+{id:"H21",n:"Pale Yellow",r:255,g:251,b:225},{id:"H22",n:"Light Muted Blue",r:202,g:202,b:212},
+{id:"H23",n:"Grey",r:154,g:157,b:148},
+{id:"M1",n:"Light Muted Green",r:188,g:198,b:184},{id:"M2",n:"Muted Green",r:138,g:163,b:134},
+{id:"M3",n:"Grey",r:105,g:125,b:128},{id:"M4",n:"Light Orange",r:227,g:210,b:188},
+{id:"M5",n:"Light Yellow",r:208,g:204,b:170},{id:"M6",n:"Muted Yellow",r:176,g:167,b:130},
+{id:"M7",n:"Muted Orange",r:180,g:164,b:151},{id:"M8",n:"Muted Red",r:179,g:130,b:129},
+{id:"M9",n:"Muted Orange",r:165,g:135,b:103},{id:"M10",n:"Light Muted Pink",r:197,g:178,b:188},
+{id:"M11",n:"Muted Pink",r:159,g:117,b:148},{id:"M12",n:"Dark Muted Red",r:100,g:71,b:73},
+{id:"M13",n:"Orange",r:209,g:144,b:102},{id:"M14",n:"Red",r:199,g:115,b:98},
+{id:"M15",n:"Grey",r:117,g:125,b:120}
+];
+const SERIES_INFO={
+  A:{name:"A系 暖黄/橙/朱红",count:26},B:{name:"B系 绿/黄绿/薄荷",count:32},
+  C:{name:"C系 青/蓝/天蓝",count:29},D:{name:"D系 蓝/紫/靛",count:26},
+  E:{name:"E系 粉/洋红/浅粉",count:24},F:{name:"F系 红/朱红/粉红",count:25},
+  G:{name:"G系 肤色/橙棕",count:21},H:{name:"H系 黑白灰/中性",count:23},
+  M:{name:"M系 莫兰迪/灰调",count:15}
+};
+const MARD_MAP={};MARD.forEach(c=>MARD_MAP[c.id]=c);
+
+let loadedImg=null,gridDataRaw=null,gridDataRef=null;
+
+function cDist(r1,g1,b1,r2,g2,b2){
+  const rm=(r1+r2)/2,dr=r1-r2,dg=g1-g2,db=b1-b2;
+  return(2+rm/256)*dr*dr+4*dg*dg+(2+(255-rm)/256)*db*db;
+}
+function beadDist(a,b){return cDist(a.r,a.g,a.b,b.r,b.g,b.b);}
+function findNearestIn(r,g,b,pal){
+  let best=pal[0],bd=Infinity;
+  for(const c of pal){const d=cDist(r,g,b,c.r,c.g,c.b);if(d<bd){bd=d;best=c;}}
+  return best;
+}
+function tC(r,g,b){return(.299*r+.587*g+.114*b)>145?'#000':'#fff'}
+function tS(r,g,b){return(.299*r+.587*g+.114*b)>145?'0 0 1px rgba(255,255,255,.5)':'0 0 1px rgba(0,0,0,.5)'}
+
+// Deep copy grid
+function cloneGrid(g){return g.map(row=>row.slice());}
+
+// Smart color reduction: merge closest pair iteratively
+function reduceColors(grid,rows,cols,maxColors){
+  let usage={};
+  for(let y=0;y<rows;y++)for(let x=0;x<cols;x++) usage[grid[y][x].id]=(usage[grid[y][x].id]||0)+1;
+  let activeIds=Object.keys(usage);
+  if(activeIds.length<=maxColors) return grid;
+  const mergedTo={};activeIds.forEach(id=>mergedTo[id]=id);
+  while(activeIds.length>maxColors){
+    let bestDist=Infinity,mF=null,mT=null;
+    for(let i=0;i<activeIds.length;i++)for(let j=i+1;j<activeIds.length;j++){
+      const d=beadDist(MARD_MAP[activeIds[i]],MARD_MAP[activeIds[j]]);
+      if(d<bestDist){bestDist=d;
+        if(usage[activeIds[i]]>=usage[activeIds[j]]){mT=activeIds[i];mF=activeIds[j];}
+        else{mT=activeIds[j];mF=activeIds[i];}
+      }
+    }
+    if(!mF)break;
+    for(const id in mergedTo)if(mergedTo[id]===mF)mergedTo[id]=mT;
+    usage[mT]+=usage[mF];delete usage[mF];
+    activeIds=activeIds.filter(id=>id!==mF);
+  }
+  for(let y=0;y<rows;y++)for(let x=0;x<cols;x++){
+    const t=mergedTo[grid[y][x].id];
+    if(t!==grid[y][x].id)grid[y][x]=MARD_MAP[t];
+  }
+  return grid;
+}
+
+// Fine-grained denoise: level 0~6 maps to strength 0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0
+// Fractional levels use probability-based replacement
+function denoise(grid,rows,cols,sliderVal){
+  if(sliderVal===0) return grid;
+  const strength=sliderVal*0.5; // 0.5 step: 0.5, 1.0, 1.5, 2.0, 2.5, 3.0
+  const passes=Math.ceil(strength); // number of full passes
+  const lastPassProb=strength-Math.floor(strength); // fractional part: 0 or 0.5
+
+  for(let p=0;p<passes;p++){
+    let changed=false;
+    const snap=cloneGrid(grid);
+    const isLastPass=(p===passes-1);
+    const prob=(isLastPass && lastPassProb>0)?lastPassProb:1.0;
+
+    for(let y=0;y<rows;y++)for(let x=0;x<cols;x++){
+      const cur=snap[y][x].id;
+      const nb=[];
+      if(y>0)nb.push(snap[y-1][x]);
+      if(y<rows-1)nb.push(snap[y+1][x]);
+      if(x>0)nb.push(snap[y][x-1]);
+      if(x<cols-1)nb.push(snap[y][x+1]);
+
+      const sameCount=nb.filter(n=>n.id===cur).length;
+
+      // Only replace completely isolated pixels (0 same neighbors)
+      if(sameCount===0 && nb.length>=2){
+        const nCnt={};
+        for(const n of nb)if(n.id!==cur)nCnt[n.id]=(nCnt[n.id]||0)+1;
+        let bestId=null,bestCnt=0;
+        for(const id in nCnt)if(nCnt[id]>bestCnt){bestCnt=nCnt[id];bestId=id;}
+
+        // Need at least 2 neighbors agreeing (strong consensus)
+        if(bestId && bestCnt>=2){
+          // Apply probability for fractional passes
+          if(prob>=1.0 || Math.random()<prob){
+            grid[y][x]=MARD_MAP[bestId];
+            changed=true;
+          }
+        }
+      }
+    }
+    if(!changed)break;
+  }
+  return grid;
+}
+
+// Slider display: map 0-6 to 0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0
+const smSlider=document.getElementById('smLv');
+const smVal=document.getElementById('smLvVal');
+function updateSmLabel(){smVal.textContent=(smSlider.value*0.5).toFixed(1);}
+smSlider.addEventListener('input',updateSmLabel);
+updateSmLabel();
+
+document.getElementById('imgIn').addEventListener('change',function(e){
+  const f=e.target.files[0];if(!f)return;
+  const rd=new FileReader();
+  rd.onload=function(ev){
+    const img=new Image();
+    img.onload=function(){loadedImg=img;document.getElementById('origP').src=ev.target.result;document.getElementById('pA').style.display='block';document.getElementById('iI').textContent='尺寸: '+img.width+' × '+img.height+'px';};
+    img.src=ev.target.result;
+  };rd.readAsDataURL(f);
+});
+
+// Tab switching
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+    this.classList.add('active');
+    document.getElementById('tab-'+this.dataset.tab).classList.add('active');
+    // Toggle legends
+    const isRaw=this.dataset.tab==='raw';
+    document.getElementById('lA_raw').style.display=isRaw?'block':'none';
+    document.getElementById('lA_ref').style.display=isRaw?'none':'block';
+  });
+});
+
+function renderTable(tblId,grid,rows,cols,cs,fs){
+  const tbl=document.getElementById(tblId);let h='';
+  for(let y=0;y<rows;y++){h+='<tr>';for(let x=0;x<cols;x++){
+    const bd=grid[y][x],tc=tC(bd.r,bd.g,bd.b),ts=tS(bd.r,bd.g,bd.b);
+    let bt='1px solid rgba(0,0,0,0.1)',bb=bt,bl=bt,br=bt;
+    if(y%10===0)bt='2.5px solid rgba(0,0,0,0.75)';else if(y%5===0)bt='1.5px solid rgba(0,0,0,0.4)';
+    if(y===rows-1)bb='2.5px solid rgba(0,0,0,0.75)';else if((y+1)%10===0)bb='2.5px solid rgba(0,0,0,0.75)';else if((y+1)%5===0)bb='1.5px solid rgba(0,0,0,0.4)';
+    if(x%10===0)bl='2.5px solid rgba(0,0,0,0.75)';else if(x%5===0)bl='1.5px solid rgba(0,0,0,0.4)';
+    if(x===cols-1)br='2.5px solid rgba(0,0,0,0.75)';else if((x+1)%10===0)br='2.5px solid rgba(0,0,0,0.75)';else if((x+1)%5===0)br='1.5px solid rgba(0,0,0,0.4)';
+    h+='<td style="background:rgb('+bd.r+','+bd.g+','+bd.b+');color:'+tc+';width:'+cs+'px;height:'+cs+'px;min-width:'+cs+'px;font-size:'+fs+'px;text-shadow:'+ts+';border-top:'+bt+';border-bottom:'+bb+';border-left:'+bl+';border-right:'+br+'">'+bd.id+'</td>';
+  }h+='</tr>';}
+  tbl.innerHTML=h;
+}
+
+function buildLegend(grid,rows,cols,lgId,tbId,tcId){
+  const cCnt={};
+  for(let y=0;y<rows;y++)for(let x=0;x<cols;x++) cCnt[grid[y][x].id]=(cCnt[grid[y][x].id]||0)+1;
+  const sorted=Object.entries(cCnt).sort((a,b)=>b[1]-a[1]);
+  document.getElementById(tbId).textContent=rows*cols;
+  document.getElementById(tcId).textContent=sorted.length;
+  const byS={};
+  for(const[id,cnt]of sorted){const s=id.replace(/[0-9]/g,'');if(!byS[s])byS[s]=[];byS[s].push({id,cnt});}
+  let lh='';
+  for(const s of['A','B','C','D','E','F','G','H','M']){
+    if(!byS[s])continue;
+    const si=SERIES_INFO[s],sCnt=byS[s].reduce((a,b)=>a+b.cnt,0);
+    lh+='<div class="ls"><h3>'+si.name+' — 使用 '+byS[s].length+'/'+si.count+' 色，共 '+sCnt+' 颗</h3><div class="lf">';
+    byS[s].sort((a,b)=>parseInt(a.id.slice(1))-parseInt(b.id.slice(1)));
+    for(const item of byS[s]){
+      const c=MARD_MAP[item.id];
+      lh+='<div class="lc"><div class="sw" style="background:rgb('+c.r+','+c.g+','+c.b+')"></div><strong>'+item.id+'</strong> '+c.n+' <span style="color:#999">×'+item.cnt+'</span></div>';
+    }
+    lh+='</div></div>';
+  }
+  document.getElementById(lgId).innerHTML=lh;
+  return{cCnt,sorted};
+}
+
+document.getElementById('genB').addEventListener('click',function(){
+  if(!loadedImg){alert('请先选择一张图片！');return;}
+  const cols=parseInt(document.getElementById('gC').value)||29;
+  const maxC=parseInt(document.getElementById('mxC').value)||40;
+  const smLv=parseInt(smSlider.value);
+  const cs=parseInt(document.getElementById('cS').value)||28;
+  const fs=parseInt(document.getElementById('fS').value)||7;
+  const img=loadedImg,ratio=img.height/img.width,rows=Math.round(cols*ratio);
+
+  const cv=document.getElementById('hC');cv.width=cols;cv.height=rows;
+  const ctx=cv.getContext('2d');
+  ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='medium';
+  ctx.drawImage(img,0,0,cols,rows);
+  const data=ctx.getImageData(0,0,cols,rows).data;
+
+  // Step 1: Initial nearest-color match
+  let gridInit=[];
+  for(let y=0;y<rows;y++){const row=[];for(let x=0;x<cols;x++){
+    const i=(y*cols+x)*4,a=data[i+3];
+    const r=a<128?237:data[i],g=a<128?237:data[i+1],b=a<128?237:data[i+2];
+    row.push(findNearestIn(r,g,b,MARD));
+  }gridInit.push(row);}
+
+  const bc=new Set();
+  for(let y=0;y<rows;y++)for(let x=0;x<cols;x++)bc.add(gridInit[y][x].id);
+
+  // Step 2: Color reduction → RAW version (no denoise)
+  let gridRaw=cloneGrid(gridInit);
+  gridRaw=reduceColors(gridRaw,rows,cols,maxC);
+
+  // Step 3: Refined = raw + denoise
+  let gridRef=cloneGrid(gridRaw);
+  gridRef=denoise(gridRef,rows,cols,smLv);
+
+  gridDataRaw={grid:gridRaw,rows,cols,cs,fs};
+  gridDataRef={grid:gridRef,rows,cols,cs,fs};
+
+  // Count
+  const rawColors=new Set();const refColors=new Set();
+  for(let y=0;y<rows;y++)for(let x=0;x<cols;x++){rawColors.add(gridRaw[y][x].id);refColors.add(gridRef[y][x].id);}
+
+  // Tip
+  const tipBox=document.getElementById('tipBox');
+  const smStr=(smLv*0.5).toFixed(1);
+  tipBox.innerHTML='💡 初始 <b>'+bc.size+'</b> 种 → 合并后 <b>'+rawColors.size+'</b> 种(原始版) → 去噪后 <b>'+refColors.size+'</b> 种(精细版, 强度'+smStr+') · '+cols+'×'+rows+' = '+(cols*rows)+' 颗';
+  tipBox.style.display='block';
+
+  // Render both tables
+  renderTable('pxG_raw',gridRaw,rows,cols,cs,fs);
+  renderTable('pxG_ref',gridRef,rows,cols,cs,fs);
+  document.getElementById('pC').style.display='block';
+
+  // Build both legends
+  buildLegend(gridRaw,rows,cols,'lG_raw','tB_raw','tC_raw');
+  buildLegend(gridRef,rows,cols,'lG_ref','tB_ref','tC_ref');
+
+  // Show active legend
+  const activeTab=document.querySelector('.tab-btn.active').dataset.tab;
+  document.getElementById('lA_raw').style.display=activeTab==='raw'?'block':'none';
+  document.getElementById('lA_ref').style.display=activeTab==='refined'?'block':'none';
+
+  document.getElementById('expB').style.display='inline-block';
+  document.getElementById('expB2').style.display='inline-block';
+});
+
+// ==================== Export function ====================
+function exportGrid(gd,filename){
+  if(!gd)return;
+  const{grid,rows,cols,cs,fs}=gd;
+  const cCnt={};
+  for(let y=0;y<rows;y++)for(let x=0;x<cols;x++) cCnt[grid[y][x].id]=(cCnt[grid[y][x].id]||0)+1;
+  const sorted=Object.entries(cCnt).sort((a,b)=>b[1]-a[1]);
+  const byS={};
+  for(const[id,cnt]of sorted){const s=id.replace(/[0-9]/g,'');if(!byS[s])byS[s]=[];byS[s].push({id,cnt});}
+  for(const s in byS)byS[s].sort((a,b)=>parseInt(a.id.slice(1))-parseInt(b.id.slice(1)));
+
+  const gridW=cols*cs,canvasW=Math.max(gridW+40,700),legPad=20,topPad=cs*2;
+  const legItemW=135,legItemH=20;
+  let legTotalH=0;
+  for(const s of['A','B','C','D','E','F','G','H','M']){
+    if(!byS[s])continue;
+    const lc=Math.max(1,Math.floor((canvasW-legPad*2)/legItemW));
+    legTotalH+=24+Math.ceil(byS[s].length/lc)*legItemH+8;
+  }
+  legTotalH+=50;
+  const totalH=topPad+rows*cs+legTotalH+30;
+  const ec=document.createElement('canvas');ec.width=canvasW;ec.height=totalH;
+  const ctx=ec.getContext('2d');
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,canvasW,totalH);
+  const ox=Math.max(0,(canvasW-gridW)/2);
+
+  for(let y=0;y<rows;y++)for(let x=0;x<cols;x++){
+    const bd=grid[y][x],px=ox+x*cs,py=topPad+y*cs;
+    ctx.fillStyle='rgb('+bd.r+','+bd.g+','+bd.b+')';
+    ctx.fillRect(px,py,cs,cs);
+    ctx.strokeStyle='rgba(0,0,0,0.1)';ctx.lineWidth=0.5;ctx.strokeRect(px,py,cs,cs);
+  }
+  for(let y=0;y<=rows;y++){
+    if(y%10===0){ctx.strokeStyle='rgba(0,0,0,0.75)';ctx.lineWidth=2.5;}
+    else if(y%5===0){ctx.strokeStyle='rgba(0,0,0,0.4)';ctx.lineWidth=1.5;}
+    else continue;
+    ctx.beginPath();ctx.moveTo(ox,topPad+y*cs);ctx.lineTo(ox+cols*cs,topPad+y*cs);ctx.stroke();
+  }
+  for(let x=0;x<=cols;x++){
+    if(x%10===0){ctx.strokeStyle='rgba(0,0,0,0.75)';ctx.lineWidth=2.5;}
+    else if(x%5===0){ctx.strokeStyle='rgba(0,0,0,0.4)';ctx.lineWidth=1.5;}
+    else continue;
+    ctx.beginPath();ctx.moveTo(ox+x*cs,topPad);ctx.lineTo(ox+x*cs,topPad+rows*cs);ctx.stroke();
+  }
+  for(let y=0;y<rows;y++)for(let x=0;x<cols;x++){
+    const bd=grid[y][x];
+    ctx.fillStyle=tC(bd.r,bd.g,bd.b);
+    ctx.font='bold '+fs+'px system-ui,sans-serif';
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(bd.id,ox+x*cs+cs/2,topPad+y*cs+cs/2);
+  }
+  let curY=topPad+rows*cs+16;
+  ctx.fillStyle='#222';ctx.font='bold 14px system-ui,sans-serif';
+  ctx.textAlign='left';ctx.textBaseline='top';
+  ctx.fillText('MARD 拼豆用量统计 — 共 '+(rows*cols)+' 颗，'+sorted.length+' 种颜色',legPad,curY);
+  curY+=26;
+  for(const s of['A','B','C','D','E','F','G','H','M']){
+    if(!byS[s])continue;
+    const si=SERIES_INFO[s],sCnt=byS[s].reduce((a,b)=>a+b.cnt,0);
+    ctx.fillStyle='#555';ctx.font='bold 11px system-ui,sans-serif';
+    ctx.fillText(si.name+' — '+byS[s].length+'/'+si.count+' 色，'+sCnt+' 颗',legPad,curY);
+    curY+=18;
+    const lc=Math.max(1,Math.floor((canvasW-legPad*2)/legItemW));
+    byS[s].forEach((item,i)=>{
+      const c=MARD_MAP[item.id];
+      const col=i%lc,row=Math.floor(i/lc);
+      const ix=legPad+col*legItemW,iy=curY+row*legItemH;
+      ctx.fillStyle='rgb('+c.r+','+c.g+','+c.b+')';ctx.fillRect(ix,iy,13,13);
+      ctx.strokeStyle='rgba(0,0,0,0.15)';ctx.lineWidth=0.5;ctx.strokeRect(ix,iy,13,13);
+      ctx.fillStyle='#333';ctx.font='bold 10px system-ui,sans-serif';
+      ctx.textAlign='left';ctx.textBaseline='middle';
+      ctx.fillText(item.id+' '+c.n+' ×'+item.cnt,ix+16,iy+7);
+    });
+    curY+=Math.ceil(byS[s].length/lc)*legItemH+8;
+  }
+  const link=document.createElement('a');
+  link.download=filename;link.href=ec.toDataURL('image/png');link.click();
+}
+
+document.getElementById('expB').addEventListener('click',function(){exportGrid(gridDataRef,'MARD_refined.png');});
+document.getElementById('expB2').addEventListener('click',function(){exportGrid(gridDataRaw,'MARD_raw.png');});
+</script>
+
+<!-- ===== 注册 Service Worker ===== -->
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('./sw.js')
+      .then(function(reg) { console.log('SW registered:', reg.scope); })
+      .catch(function(err) { console.log('SW failed:', err); });
+  });
+}
+</script>
+<!-- ===== Service Worker 注册结束 ===== -->
+
+</body>
+</html>
