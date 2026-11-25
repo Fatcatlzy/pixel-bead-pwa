@@ -1,18 +1,518 @@
-
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="manifest" href="manifest.json">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="拼豆像素画">
-<link rel="apple-touch-icon" href="icon-192.png">
-<meta name="theme-color" content="#1a1a2e">
-
-<style>
+<html><head>
+<meta charset="UTF-8"><style id="qw-theme">:root {
+  --contextual-navbar-foreground-color: #000000 !important;
+  --connection-foreground-color: #FFFFFF !important;
+  --automation-foreground-color: #FFFFFF !important;
+  --global-navbar-background-color: #F3F3F7 !important;
+  --accent-foreground-color: #FFFFFF !important;
+  --primary-foreground-color: #000000 !important;
+  --measure-foreground-color: #CB7600 !important;
+  --dimension-foreground-color: #1B84BF !important;
+  --warning-background-color: #FF9800 !important;
+  --warning-foreground-color: #000000 !important;
+  --success-background-color: #27700E !important;
+  --info-foreground-color: #FFFFFF !important;
+  --secondary-foreground-color: #000000 !important;
+  --info-background-color: #2196F3 !important;
+  --measure-background-color: #FFF8EF !important;
+  --contextual-navbar-background-color: #FFFFFF !important;
+  --accent-background-color: #4200DB !important;
+  --visualization-background-color: #6842FF !important;
+  --connection-background-color: #FF4B14 !important;
+  --secondary-background-color: #F9F9FB !important;
+  --danger-background-color: #C82745 !important;
+  --automation-background-color: #D600BA !important;
+  --success-foreground-color: #FFFFFF !important;
+  --danger-foreground-color: #FFFFFF !important;
+  --dimension-background-color: #EEF8FF !important;
+  --insight-foreground-color: #FFFFFF !important;
+  --primary-background-color: #FFFFFF !important;
+  --insight-background-color: #78008A !important;
+  --visualization-foreground-color: #FFFFFF !important;
+  --global-navbar-foreground-color: #5A5A5B !important;
+  --chat-column-base: 720px !important;
+  --chat-column-max: clamp(888px, 50vw, 1200px) !important;
+  --color-bg: #faf9fc !important;
+  --color-navbar-bg: #f9f9fb !important;
+  --color-navbar-fg: #131920 !important;
+  --color-navbar-divider: rgba(0, 0, 0, .12) !important;
+  --color-leftnav-bg: #ffffff !important;
+  --color-bg-chat-view: #f9f9fb !important;
+  --color-bg-secondary: #ffffff !important;
+  --color-bg-tertiary: #f9fafb !important;
+  --color-bg-hover: #f3f4f6 !important;
+  --color-surface: #f9fafb !important;
+  --color-surface-hover: #f3f4f6 !important;
+  --color-surface-active: #e5e7eb !important;
+  --color-border: rgba(0, 0, 0, .12) !important;
+  --color-border-light: rgba(0, 0, 0, .06) !important;
+  --color-border-strong: #d1d5db !important;
+  --background-toggle-off-default: rgba(255, 255, 255, 0) !important;
+  --color-primary: #4200db !important;
+  --color-primary-dark: #35009e !important;
+  --color-primary-light: #8575ff !important;
+  --color-primary-bg: #e8e6ff !important;
+  --color-primary-hover-border: #35009e !important;
+  --color-nav-icon-active: #4200db !important;
+  --color-nav-hover-border: #4200db !important;
+  --color-primary-alpha-3: color-mix(in srgb, #4200db 3%, transparent) !important;
+  --color-primary-alpha-5: color-mix(in srgb, #4200db 5%, transparent) !important;
+  --color-primary-alpha-8: color-mix(in srgb, #4200db 8%, transparent) !important;
+  --color-primary-alpha-12: color-mix(in srgb, #4200db 12%, transparent) !important;
+  --color-primary-alpha-15: color-mix(in srgb, #4200db 15%, transparent) !important;
+  --color-primary-alpha-20: color-mix(in srgb, #4200db 20%, transparent) !important;
+  --color-primary-alpha-25: color-mix(in srgb, #4200db 25%, transparent) !important;
+  --color-primary-alpha-30: color-mix(in srgb, #4200db 30%, transparent) !important;
+  --color-primary-alpha-40: color-mix(in srgb, #4200db 40%, transparent) !important;
+  --color-primary-alpha-50: color-mix(in srgb, #4200db 50%, transparent) !important;
+  --color-primary-alpha-60: color-mix(in srgb, #4200db 60%, transparent) !important;
+  --color-primary-subtle: color-mix(in srgb, #4200db 12%, transparent) !important;
+  --color-primary-border: color-mix(in srgb, #4200db 30%, transparent) !important;
+  --color-focus-ring: #4200db !important;
+  --color-sidebar-hover: color-mix(in srgb, #4200db 12%, transparent) !important;
+  --color-sidebar-hover-solid: color-mix(in srgb, #4200db 12%, #faf9fc) !important;
+  --block-selection-outline-offset: 2px !important;
+  --color-accent: #4200db !important;
+  --color-accent-foreground: #4200db !important;
+  --color-accent-dark: #35009e !important;
+  --color-accent-light: #e8e6ff !important;
+  --color-accent-inverse: #ffffff !important;
+  --color-link: #4200db !important;
+  --color-brand-ai-gradient-start: #6842ff !important;
+  --color-brand-ai-gradient-mid: #d600ba !important;
+  --color-brand-ai-gradient-end: #ff4b14 !important;
+  --color-brand-kiro: #9147ff !important;
+  --color-primary-gradient-end: #e8e6ff !important;
+  --color-primary-bg-solid: #e8e6ff !important;
+  --color-user-bubble: #F3F3F7 !important;
+  --color-user-bubble-text: #131920 !important;
+  --color-text: #131920 !important;
+  --color-text-secondary: #5e5e5e !important;
+  --color-text-tertiary: #656871 !important;
+  --color-text-muted: #656871 !important;
+  --color-text-on-primary: #ffffff !important;
+  --color-success: #00802f !important;
+  --color-success-dark: #00471e !important;
+  --color-success-light: #d9ffd6 !important;
+  --color-success-hover: #005c26 !important;
+  --color-success-bg: #e6f5eb !important;
+  --color-success-border: #b3d9bf !important;
+  --color-success-foreground: #00802f !important;
+  --color-success-dark-foreground: #00471e !important;
+  --color-success-text: #00471e !important;
+  --color-error: #db0000 !important;
+  --color-error-dark: #700000 !important;
+  --color-error-light: #ffe0e0 !important;
+  --color-error-hover: #ffe0e0 !important;
+  --color-error-bg: #fceaea !important;
+  --color-error-border: #f2cccc !important;
+  --color-error-active-border: #db0000 !important;
+  --color-error-foreground: #db0000 !important;
+  --color-error-dark-foreground: #700000 !important;
+  --color-error-inverse: #ffffff !important;
+  --color-error-text: #700000 !important;
+  --color-warning: #f2b100 !important;
+  --color-warning-dark: #573a00 !important;
+  --color-warning-light: #fffbbd !important;
+  --color-warning-hover: #db9200 !important;
+  --color-warning-bg: #fef7e6 !important;
+  --color-warning-border: #f9dfa3 !important;
+  --color-warning-foreground: #f2b100 !important;
+  --color-warning-dark-foreground: #573a00 !important;
+  --color-warning-inverse: #573a00 !important;
+  --color-surface-warning: #fffbbd !important;
+  --color-text-warning: #573a00 !important;
+  --color-info: #006ce0 !important;
+  --color-info-dark: #002a66 !important;
+  --color-info-light: #d1f1ff !important;
+  --color-info-hover: #003b8f !important;
+  --color-info-bg: #ebf3fc !important;
+  --color-info-border: #b3d1f0 !important;
+  --color-info-foreground: #006ce0 !important;
+  --color-info-dark-foreground: #002a66 !important;
+  --color-info-inverse: #ffffff !important;
+  --color-overlay: rgba(0, 0, 0, .5) !important;
+  --color-shadow: rgba(0, 0, 0, .08) !important;
+  --color-hover: rgba(0, 0, 0, .05) !important;
+  --color-tooltip-bg: rgba(0, 0, 0, .85) !important;
+  --color-tooltip-text: #ffffff !important;
+  --color-voice-purple: #8575ff !important;
+  --color-voice-purple-dark: #4200db !important;
+  --color-voice-purple-light: #8575ff !important;
+  --color-voice-red: #db0000 !important;
+  --color-voice-red-dark: #700000 !important;
+  --color-voice-amber: #f2b100 !important;
+  --color-voice-purple-glow: rgba(66, 0, 219, .4) !important;
+  --color-voice-red-glow: rgba(219, 0, 0, .4) !important;
+  --font-sans: "Amazon Ember", "Helvetica Neue", "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+  --font-mono: "SF Mono", "Monaco", "Menlo", "Consolas", monospace !important;
+  --text-2xs: .5625rem !important;
+  --text-xs: .625rem !important;
+  --text-sm: .6875rem !important;
+  --text-base: .75rem !important;
+  --text-md: .8125rem !important;
+  --text-lg: .875rem !important;
+  --text-xl: 1rem !important;
+  --text-2xl: 1.125rem !important;
+  --text-3xl: 1.25rem !important;
+  --text-4xl: 1.5rem !important;
+  --text-5xl: 2rem !important;
+  --spacing-1: calc(.25rem * 1) !important;
+  --spacing-1-5: calc(.25rem * 1.5) !important;
+  --spacing-2: calc(.25rem * 2) !important;
+  --spacing-3: calc(.25rem * 3) !important;
+  --spacing-4: calc(.25rem * 4) !important;
+  --spacing-5: calc(.25rem * 5) !important;
+  --spacing-6: calc(.25rem * 6) !important;
+  --spacing-7: calc(.25rem * 7) !important;
+  --spacing-8: calc(.25rem * 8) !important;
+  --spacing-9: calc(.25rem * 9) !important;
+  --spacing-10: calc(.25rem * 10) !important;
+  --border-radius-rounded-lg: 8px !important;
+  --radius-sm: 6px !important;
+  --radius-md: 10px !important;
+  --radius-card: 12px !important;
+  --radius-lg: 16px !important;
+  --radius-pill: 8px !important;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, .05) !important;
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, .08) !important;
+  --shadow-lg: 0 4px 16px 4px rgba(0, 0, 0, .16), 0 2px 6px 1px rgba(0, 0, 0, .16) !important;
+  --color-success-bg-solid: #d9ffd6 !important;
+  --color-error-bg-solid: #ffe0e0 !important;
+  --color-error-border-solid: #ffe0e0 !important;
+  --color-warning-bg-solid: #fffbbd !important;
+  --color-warning-text: #573a00 !important;
+  --color-info-bg-solid: #d1f1ff !important;
+  --color-info-bg-solid-alt: #d1f1ff !important;
+  --color-info-text: #002a66 !important;
+  --color-info-text-alt: #002a66 !important;
+  --color-emerald: #10b981 !important;
+  --color-teal: #4ecdc4 !important;
+  --color-code-bg: #F3F3F7 !important;
+  --color-code-header-bg: #f1f3f5 !important;
+  --color-code-text: #24292e !important;
+  --color-code-border: #e1e4e8 !important;
+  --color-code-muted: #6a737d !important;
+  --color-inline-code-bg: #F3F3F7 !important;
+  --color-inline-code-text: #24292e !important;
+  --color-inline-code-border: #e1e4e8 !important;
+  --color-scrollbar-thumb: #d1d5db !important;
+  --color-scrollbar-track: transparent !important;
+  --qs-data-cat-01: #4338CA !important;
+  --qs-data-cat-02: #D97706 !important;
+  --qs-data-cat-03: #0891B2 !important;
+  --qs-data-cat-04: #8B5CF6 !important;
+  --qs-data-cat-05: #15803D !important;
+  --qs-data-cat-06: #0C4A6E !important;
+  --qs-data-cat-07: #D946EF !important;
+  --qs-data-cat-08: #65A30D !important;
+  --qs-data-cat-09: #1D4ED8 !important;
+  --qs-data-cat-10: #831843 !important;
+  --qs-data-cat-11: #C2410C !important;
+  --qs-data-cat-12: #115E59 !important;
+  --qs-data-cat-other: #737373 !important;
+  --qs-content: #fff !important;
+  --qs-main: #f9f9fb !important;
+  --qs-primary-foreground: #131920 !important;
+  --qs-secondary-foreground: #656871 !important;
+  --qs-tertiary-foreground: #656871 !important;
+  --qs-placeholder-foreground: #656871 !important;
+  --qs-divider: #dedee3 !important;
+  --qs-default-border: #8c8c94 !important;
+  --qs-neutral-soft: #b4b4bb !important;
+  --qs-neutral-gray-50: #f9fafb !important;
+  --qs-tertiary-background: #f9fafb !important;
+  --qs-action-hover: #f3f3f7 !important;
+  --qs-primary-default: #4200db !important;
+  --qs-primary-dark: #35009e !important;
+  --qs-primary-medium: #8575ff !important;
+  --qs-primary-light: #e8e6ff !important;
+  --qs-primary-inverse: #fff !important;
+  --qs-success-default: #00802f !important;
+  --qs-success-dark: #00471e !important;
+  --qs-success-light: #d9ffd6 !important;
+  --qs-error-default: #db0000 !important;
+  --qs-error-dark: #700000 !important;
+  --qs-warning-default: #f2b100 !important;
+  --qs-warning-dark: #573a00 !important;
+  --qs-warning-light: #fffbbd !important;
+  --qs-info-default: #006ce0 !important;
+  --qs-info-dark: #002a66 !important;
+  --qs-font-sans: "Amazon Ember", "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif !important;
+  --safe-top: 0px !important;
+  --safe-bottom: 0px !important;
+  --safe-left: 0px !important;
+  --safe-right: 0px !important;
+  --qs-action-active: #e8e6ff !important;
+  --qs-action-active-hover: #b2a8ff !important;
+  --qs-action-disabled: #f3f3f7 !important;
+  --qs-active-border: #4200db !important;
+  --qs-application-navbar: #4200db !important;
+  --qs-application-navbar-dark: #35009e !important;
+  --qs-application-navbar-foreground: #fff !important;
+  --qs-application-navbar-light: #e8e6ff !important;
+  --qs-automation-dark: #660052 !important;
+  --qs-automation-default: #d600ba !important;
+  --qs-automation-light: #ffe0fb !important;
+  --qs-automation-medium: #b3008f !important;
+  --qs-automation-soft: #ff94f1 !important;
+  --qs-avatar-blue-bg: #d1f1ff !important;
+  --qs-avatar-blue-fg: #002a66 !important;
+  --qs-avatar-fuchsia-bg: #fce6ff !important;
+  --qs-avatar-fuchsia-fg: #590066 !important;
+  --qs-avatar-green-bg: #d9ffd6 !important;
+  --qs-avatar-green-fg: #00471e !important;
+  --qs-avatar-neutral-bg: #dedee3 !important;
+  --qs-avatar-neutral-fg: #131920 !important;
+  --qs-avatar-orange-bg: #ffe0d6 !important;
+  --qs-avatar-orange-fg: #661800 !important;
+  --qs-avatar-pink-bg: #ffe0fb !important;
+  --qs-avatar-pink-fg: #660052 !important;
+  --qs-avatar-primary-bg: #e8e6ff !important;
+  --qs-avatar-primary-fg: #35009e !important;
+  --qs-avatar-red-bg: #ffe0e0 !important;
+  --qs-avatar-red-fg: #700000 !important;
+  --qs-avatar-violet-bg: #f2e5ff !important;
+  --qs-avatar-violet-fg: #45008a !important;
+  --qs-avatar-yellow-bg: #fffbbd !important;
+  --qs-avatar-yellow-fg: #573a00 !important;
+  --qs-blue-100: #e2ebff !important;
+  --qs-blue-1000: #060d27 !important;
+  --qs-blue-200: #c2d5ff !important;
+  --qs-blue-300: #9fbdff !important;
+  --qs-blue-400: #7ea0fc !important;
+  --qs-blue-50: #fafbff !important;
+  --qs-blue-500: #517df6 !important;
+  --qs-blue-600: #2d5fe8 !important;
+  --qs-blue-700: #1d3cb9 !important;
+  --qs-blue-800: #162c85 !important;
+  --qs-blue-900: #102165 !important;
+  --qs-blue-950: #0b1746 !important;
+  --qs-brand: #fff !important;
+  --qs-brand-foreground: #131920 !important;
+  --qs-brand-navbar: #131920 !important;
+  --qs-brand-navbar-dark: #000 !important;
+  --qs-brand-navbar-foreground: #fff !important;
+  --qs-brand-navbar-light: #dedee3 !important;
+  --qs-coachmark: #006ce0 !important;
+  --qs-connection-dark: #661800 !important;
+  --qs-connection-default: #db3300 !important;
+  --qs-connection-light: #ffe0d6 !important;
+  --qs-connection-soft: #ff997a !important;
+  --qs-content-inverse: #333843 !important;
+  --qs-content-inverse-active: #131920 !important;
+  --qs-contrast-foreground: #131920 !important;
+  --qs-control-selected-bg: #4200db !important;
+  --qs-control-selected-hover-bg: #35009e !important;
+  --qs-darkpurple1-100: #eee1ef !important;
+  --qs-darkpurple1-1000: #130b14 !important;
+  --qs-darkpurple1-200: #dcc0dd !important;
+  --qs-darkpurple1-300: #c99ecc !important;
+  --qs-darkpurple1-400: #b57ab8 !important;
+  --qs-darkpurple1-50: #f8f2f8 !important;
+  --qs-darkpurple1-500: #97529b !important;
+  --qs-darkpurple1-600: #754078 !important;
+  --qs-darkpurple1-700: #542e57 !important;
+  --qs-darkpurple1-800: #472749 !important;
+  --qs-darkpurple1-900: #341c35 !important;
+  --qs-darkpurple1-950: #241325 !important;
+  --qs-darkpurple2-100: #f1e3fc !important;
+  --qs-darkpurple2-1000: #1b042f !important;
+  --qs-darkpurple2-200: #e7d0fb !important;
+  --qs-darkpurple2-300: #d6b0f8 !important;
+  --qs-darkpurple2-400: #be81f3 !important;
+  --qs-darkpurple2-50: #f8f1fe !important;
+  --qs-darkpurple2-500: #a652ef !important;
+  --qs-darkpurple2-600: #8e24eb !important;
+  --qs-darkpurple2-700: #7413c9 !important;
+  --qs-darkpurple2-800: #580e98 !important;
+  --qs-darkpurple2-900: #36095d !important;
+  --qs-darkpurple2-950: #260642 !important;
+  --qs-data-categorical-01: #4338ca !important;
+  --qs-data-categorical-02: #d97706 !important;
+  --qs-data-categorical-03: #0891b2 !important;
+  --qs-data-categorical-04: #8b5cf6 !important;
+  --qs-data-categorical-05: #15803d !important;
+  --qs-data-categorical-06: #0c4a6e !important;
+  --qs-data-categorical-07: #d946ef !important;
+  --qs-data-categorical-08: #65a30d !important;
+  --qs-data-categorical-09: #1d4ed8 !important;
+  --qs-data-categorical-10: #831843 !important;
+  --qs-data-categorical-11: #c2410c !important;
+  --qs-data-categorical-12: #115e59 !important;
+  --qs-data-categorical-other: #737373 !important;
+  --qs-data-divergent-negative: #ea580c !important;
+  --qs-data-divergent-positive: #4f46e5 !important;
+  --qs-data-divergent-red-green-negative: #dc2626 !important;
+  --qs-data-divergent-red-green-positive: #16a34a !important;
+  --qs-data-missing: #d4d4d4 !important;
+  --qs-data-sentiment-neutral: #737373 !important;
+  --qs-data-sentiment-warning: #9e6900 !important;
+  --qs-data-sequential-duochromatic-high: #1e1b4b !important;
+  --qs-data-sequential-duochromatic-low: #8b5cf6 !important;
+  --qs-data-sequential-monochromatic-high: #4f46e5 !important;
+  --qs-default-badge: #b4b4bb !important;
+  --qs-default-badge-dot: #656871 !important;
+  --qs-dimension: #4200db !important;
+  --qs-dimension-experimental: #4200db !important;
+  --qs-dimension-experimental-foreground: #4200db !important;
+  --qs-dimension-foreground: #fff !important;
+  --qs-disabled: #8c8c94 !important;
+  --qs-disabled-border: #dedee3 !important;
+  --qs-disabled-foreground: #b4b4bb !important;
+  --qs-divider-light: #f3f3f7 !important;
+  --qs-error-active-border: #db0000 !important;
+  --qs-error-border: #ffe0e0 !important;
+  --qs-error-foreground: #db0000 !important;
+  --qs-error-inverse: #fff !important;
+  --qs-error-light: #ffe0e0 !important;
+  --qs-error-medium: #900 !important;
+  --qs-error-soft: #ff9e9e !important;
+  --qs-focus-offset: 1px !important;
+  --qs-font-base-letter-spacing: .15px !important;
+  --qs-font-display: "Amazon Ember", "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif !important;
+  --qs-font-family: "Amazon Ember", "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif !important;
+  --qs-gradient-automation-light-stop: #ffe0fb !important;
+  --qs-gradient-automation-medium-stop: #b3008f !important;
+  --qs-gradient-automation-stop: #d600ba !important;
+  --qs-gradient-connection-light-stop: #ffe0d6 !important;
+  --qs-gradient-connection-stop: #db3300 !important;
+  --qs-gradient-insight-light-stop: #fce6ff !important;
+  --qs-gradient-insight-stop: #a000b8 !important;
+  --qs-gradient-visualization-light-stop: #f2e5ff !important;
+  --qs-gradient-visualization-stop: #7300e5 !important;
+  --qs-green-100: #ccffd8 !important;
+  --qs-green-1000: #001409 !important;
+  --qs-green-200: #a9efba !important;
+  --qs-green-300: #84d39a !important;
+  --qs-green-400: #71c68c !important;
+  --qs-green-50: #f0fff3 !important;
+  --qs-green-500: #5bbe7a !important;
+  --qs-green-600: #3c955a !important;
+  --qs-green-700: #227340 !important;
+  --qs-green-800: #00441f !important;
+  --qs-green-900: #003317 !important;
+  --qs-green-950: #002410 !important;
+  --qs-grid-gap: 16px !important;
+  --qs-grid-gap-xl: 24px !important;
+  --qs-hero-banner-button-hover: color-mix(in srgb, #fff, transparent 60%) !important;
+  --qs-hover-border: #333843 !important;
+  --qs-info-inverse: #fff !important;
+  --qs-info-light: #d1f1ff !important;
+  --qs-info-medium: #003b8f !important;
+  --qs-info-soft: #75cfff !important;
+  --qs-insight-dark: #590066 !important;
+  --qs-insight-default: #a000b8 !important;
+  --qs-insight-light: #fce6ff !important;
+  --qs-insight-soft: #f299ff !important;
+  --qs-main-foreground: #131920 !important;
+  --qs-main-secondary-foreground: #656871 !important;
+  --qs-measure: #00802f !important;
+  --qs-measure-experimental: #f2b100 !important;
+  --qs-measure-experimental-foreground: #f2b100 !important;
+  --qs-measure-foreground: #fff !important;
+  --qs-neutral-0: #fff !important;
+  --qs-neutral-100: #f5f3ef !important;
+  --qs-neutral-1000: #0b0a0a !important;
+  --qs-neutral-200: #ece9e4 !important;
+  --qs-neutral-300: #e2dfda !important;
+  --qs-neutral-400: #cdc9c1 !important;
+  --qs-neutral-50: #faf9f7 !important;
+  --qs-neutral-500: #adaaa3 !important;
+  --qs-neutral-600: #94918b !important;
+  --qs-neutral-700: #7d7a73 !important;
+  --qs-neutral-800: #5e5b56 !important;
+  --qs-neutral-900: #302f2c !important;
+  --qs-neutral-950: #151310 !important;
+  --qs-neutral-black: #000 !important;
+  --qs-neutral-dark: #333843 !important;
+  --qs-neutral-deep: #656871 !important;
+  --qs-neutral-default: #dedee3 !important;
+  --qs-neutral-light: #f3f3f7 !important;
+  --qs-neutral-lightest: #f9f9fb !important;
+  --qs-neutral-medium: #8c8c94 !important;
+  --qs-neutral-strong: #131920 !important;
+  --qs-neutral-white: #fff !important;
+  --qs-overlay: color-mix(in srgb, #131920, transparent 50%) !important;
+  --qs-popover-border: transparent !important;
+  --qs-primary-inverse-foreground: #fff !important;
+  --qs-primary-soft: #b2a8ff !important;
+  --qs-progress-active: #4200db !important;
+  --qs-red-100: #ffe4e1 !important;
+  --qs-red-1000: #240004 !important;
+  --qs-red-200: #ffc7c2 !important;
+  --qs-red-300: #ffa099 !important;
+  --qs-red-400: #eb6560 !important;
+  --qs-red-50: #fff6f5 !important;
+  --qs-red-500: #c33c38 !important;
+  --qs-red-600: #aa2b2b !important;
+  --qs-red-700: #8a0f0f !important;
+  --qs-red-800: #6e000d !important;
+  --qs-red-900: #57000a !important;
+  --qs-red-950: #3d0007 !important;
+  --qs-secondary: #dedee3 !important;
+  --qs-secondary-dark: #b4b4bb !important;
+  --qs-secondary-light: #f3f3f7 !important;
+  --qs-shadow: #00000029 !important;
+  --qs-shadow-lg: 0 4px 16px 4px #00000029, 0 2px 6px 1px #00000029 !important;
+  --qs-shadow-md: 0 0 2px 0 #00000029, 0 2px 8px 1px #00000029 !important;
+  --qs-shadow-pin-left: inset -4px 0 4px -4px #00000029 !important;
+  --qs-shadow-pin-right: inset 4px 0 4px -4px #00000029 !important;
+  --qs-shadow-sm: 0 0 2px 0 #00000029, 0 0 4px 0 #00000029 !important;
+  --qs-shadow-xl: 0 4px 8px 2px #00000029, 0 6px 20px 4px #00000029 !important;
+  --qs-spice: #ff9800 !important;
+  --qs-success-inverse: #fff !important;
+  --qs-success-medium: #005c26 !important;
+  --qs-success-soft: #aeffa8 !important;
+  --qs-tag-default: #dedee3 !important;
+  --qs-tag-soft-border: #b4b4bb !important;
+  --qs-toggle-tile-lg: calc(.25rem * 15) !important;
+  --qs-toggle-tile-md: calc(.25rem * 12) !important;
+  --qs-toggle-tile-sm: calc(.25rem * 8) !important;
+  --qs-transparent: transparent !important;
+  --qs-visualization-dark: #45008a !important;
+  --qs-visualization-default: #7300e5 !important;
+  --qs-visualization-light: #f2e5ff !important;
+  --qs-visualization-soft: #d4a8ff !important;
+  --qs-warning-experimental: #f2b100 !important;
+  --qs-warning-experimental-light: #fffbbd !important;
+  --qs-warning-experimental-light-foreground: #fffbbd !important;
+  --qs-warning-inverse: #573a00 !important;
+  --qs-warning-medium: #db9200 !important;
+  --qs-warning-soft: #ffed4d !important;
+  --qs-width-modal-lg: 1136px !important;
+  --qs-width-modal-md: 600px !important;
+  --qs-width-modal-sm: 384px !important;
+  --qs-yellow-100: #fff5cf !important;
+  --qs-yellow-1000: #1f1100 !important;
+  --qs-yellow-200: #ffe79e !important;
+  --qs-yellow-300: #fbd86f !important;
+  --qs-yellow-400: #facb3d !important;
+  --qs-yellow-50: #fffcf0 !important;
+  --qs-yellow-500: #e2ac36 !important;
+  --qs-yellow-600: #ca8d2b !important;
+  --qs-yellow-700: #9d672f !important;
+  --qs-yellow-800: #7a4c19 !important;
+  --qs-yellow-900: #522e00 !important;
+  --qs-yellow-950: #381f00 !important;
+  --qs-duration-reorder: .125s !important;
+  --qs-ease-reorder: ease-in-out !important;
+  --z-subtask-modal: 10000 !important;
+  --z-above-subtask-modal: 10001 !important;
+  --react-pdf-text-layer: 1 !important;
+  --highlight-bg-color: rgba(180, 0, 170, 1) !important;
+  --highlight-selected-bg-color: rgba(0, 100, 0, 1) !important;
+  --react-pdf-annotation-layer: 1 !important;
+  --annotation-unfocused-field-background: url("data:image/svg+xml;charset=UTF-8,<svg width='1px' height='1px' xmlns='http://www.w3.org/2000/svg'><rect width='100%' height='100%' style='fill:rgba(0, 54, 255, 0.13);'/></svg>") !important;
+  --input-focus-border-color: Highlight !important;
+  --input-focus-outline: 1px solid Canvas !important;
+  --input-unfocused-border-color: transparent !important;
+  --input-disabled-border-color: transparent !important;
+  --input-hover-border-color: black !important;
+  --link-outline: none !important;
+}</style>
+<style nonce="U0vGMICC286QAReFTaSXMA==">
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#f5f5f5;font-family:system-ui,-apple-system,sans-serif;color:#333}
 h1{text-align:center;padding:18px 0 4px;font-size:22px;color:#222}
@@ -52,11 +552,54 @@ canvas{display:none}
 .tab-content{border:1px solid #ccc;border-radius:0 6px 6px 6px;background:#fff;padding:8px;overflow:auto}
 .tab-panel{display:none}
 .tab-panel.active{display:block}
+
+.edit{max-width:960px;margin:0 auto 10px;padding:12px 14px;background:#fff;border-radius:10px;border:1px solid #e0e0e0;display:none}
+.edit-top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:8px}
+.edit-top .lbl{font-size:13px;font-weight:600;color:#444}
+.brush{display:flex;align-items:center;gap:6px;padding:4px 10px;border:2px solid #4a90d9;border-radius:6px;font-size:12px;font-weight:700}
+.brush .sw{width:20px;height:20px}
+.tgl{padding:6px 14px;border:1px solid #ccc;border-radius:6px;background:#f0f0f0;cursor:pointer;font-size:12px;font-weight:600}
+.tgl.on{background:#e74c3c;color:#fff;border-color:#e74c3c}
+.edit input[type=text]{padding:5px 8px;border:1px solid #ccc;border-radius:5px;font-size:12px;width:120px}
+.pal{max-height:200px;overflow-y:auto;border-top:1px solid #eee;padding-top:6px}
+.pal-s{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:6px;align-items:center}
+.pal-s b{font-size:11px;color:#666;width:22px}
+.pchip{width:34px;height:22px;border-radius:3px;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px solid transparent}
+.pchip.sel{border-color:#e74c3c;box-shadow:0 0 0 1px #fff inset}
+.pchip.used{outline:1px dashed #333}
+.hint{font-size:11px;color:#888}
+.editing td{cursor:crosshair}
+.editing td:hover{outline:2px solid #e74c3c;outline-offset:-2px}
+
+.nbpop{position:fixed;z-index:999;background:#fff;border:1px solid #ccc;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.2);padding:8px;display:none;font-size:11px}
+.nbpop .t{font-weight:600;color:#444;margin-bottom:6px;display:flex;justify-content:space-between;gap:10px}
+.nbpop .t span{cursor:pointer;color:#999}
+.nbg{display:grid;grid-template-columns:repeat(3,40px);gap:3px}
+.nbc{width:40px;height:40px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:10px;cursor:pointer;border:2px solid transparent}
+.nbc:hover{border-color:#e74c3c}
+.nbc.cur{border:2px dashed #333;cursor:default}
+.nbc.none{background:#f3f3f3;cursor:default;color:#bbb}
+.nbs{margin-top:6px;display:flex;flex-wrap:wrap;gap:3px;max-width:130px}
+.nbs .pchip{width:40px}
+.selcell{outline:3px solid #e74c3c!important;outline-offset:-3px}
+
+.nbb{border-top:1px solid #eee;margin-top:6px;max-width:130px}
+.nbbr{display:flex;align-items:center;gap:6px;font-weight:700}
+.nbbsw{width:40px;height:26px;border-radius:4px;border:2px solid #4a90d9;cursor:pointer}
+.nbbsw:hover{border-color:#e74c3c}
+.nbmode{display:flex;flex-direction:column;gap:2px;margin:6px 0}
+.nbmode label{display:flex;align-items:center;gap:3px;cursor:pointer}
+.nbbtn{width:100%;padding:4px 6px;font-size:11px}
+
+.cw{position:relative;display:inline-block;padding:22px 30px}
+.cwrap{text-align:center}
+.cl{position:absolute;font-size:10px;color:#999;text-align:center;line-height:1;pointer-events:none;user-select:none}
+.cl.mj{color:#000;font-weight:700}
 </style>
 </head>
 <body>
 
-<h1>🫘 拼豆像素画生成器 <span style="font-size:13px;color:#888">MARD 221色</span></h1>
+<h1>🫘 拼豆像素画生成器 <span style="font-size: 13px; color: rgb(136, 136, 136);">MARD 221色</span></h1>
 <p class="sub">数据来源: makebead/craft-color-codes (CC BY 4.0) · A/B/C/D/E/F/G/H/M 九大色系 221色</p>
 
 <div class="ctrl">
@@ -69,14 +612,28 @@ canvas{display:none}
  </div>
  <div class="cg"><label>格子(px)</label><input type="number" id="cS" value="28" min="10" max="60"></div>
  <div class="cg"><label>字号(px)</label><input type="number" id="fS" value="7" min="3" max="14"></div>
+ <div class="cg"><label>坐标间隔</label><select id="axStep" style="padding: 5px 7px; border: 1px solid rgb(204, 204, 204); border-radius: 5px; font-size: 13px; background: rgb(250, 250, 250);"><option value="5" selected="">每 5 格</option><option value="10">每 10 格</option></select></div>
  <div class="cg"><label>&nbsp;</label><button class="btn bp" id="genB">🎨 生成像素画</button></div>
  <div class="cg"><label>&nbsp;</label><button class="btn be" id="expB">📥 导出精细版</button></div>
  <div class="cg"><label>&nbsp;</label><button class="btn be2" id="expB2">📥 导出原始版</button></div>
 </div>
 
 <div class="tip" id="tipBox"></div>
+<div class="edit" id="editP">
+ <div class="edit-top">
+  <span class="lbl">🖌️ 手动改色</span>
+  <button class="tgl" id="editTgl">✏️ 开启编辑模式</button>
+  <div class="brush">当前画笔 <div class="sw" id="brSw"></div><span id="brId"></span></div>
+  <input type="text" id="palQ" placeholder="搜索色号 如 F5">
+  <button class="tgl" id="undoB">↶ 撤销</button>
+  <button class="tgl" id="redoB">↷ 重做</button>
+  <label style="font-size: 12px; display: flex; align-items: center; gap: 4px;"><input type="checkbox" id="nbInEdit" checked="">编辑时也显示候选色</label>
+ </div>
+ <div class="hint">点击格子会弹出周围 8 格颜色作为候选，点候选色即可替换该格（编辑模式下：单击只弹候选面板不涂色，按住拖动经过多格才用画笔涂色）。开启编辑后：<b>点击/拖动</b>格子涂色 · <b>右键</b>格子吸取颜色 · <b>Shift+点击</b>把同色格子全部替换 · <b>Ctrl+Z</b> 撤销 · <b>Ctrl+Y / Ctrl+Shift+Z</b> 重做 · 虚线框=图中已用色。修改对当前标签页的图纸生效，统计与导出同步更新。</div>
+ <div class="pal" id="palBox"></div>
+</div>
 
-<div class="prev" id="pA"><h2>📌 原图预览</h2><div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap"><img id="origP"><div><p class="info" id="iI"></p></div></div></div>
+<div class="prev" id="pA"><h2>📌 原图预览</h2><div style="display: flex; gap: 12px; align-items: flex-start; flex-wrap: wrap;"><img id="origP"><div><p class="info" id="iI"></p></div></div></div>
 
 <div class="pc" id="pC">
  <div class="tab-bar">
@@ -84,21 +641,26 @@ canvas{display:none}
    <div class="tab-btn" data-tab="refined">✨ 精细化像素画</div>
  </div>
  <div class="tab-content">
-   <div class="tab-panel active" id="tab-raw"><table id="pxG_raw"></table></div>
-   <div class="tab-panel" id="tab-refined"><table id="pxG_ref"></table></div>
+   <div class="tab-panel active" id="tab-raw"><div class="cwrap"><div class="cw" id="cw_pxG_raw"><table id="pxG_raw"></table></div></div></div>
+   <div class="tab-panel" id="tab-refined"><div class="cwrap"><div class="cw" id="cw_pxG_ref"><table id="pxG_ref"></table></div></div></div>
  </div>
 </div>
 
-<div class="leg" id="lA_raw" style="display:none">
+<div class="leg" id="lA_raw" style="display: none;">
  <h2>📊 原始版用量统计 (共 <span id="tB_raw">0</span> 颗，<span id="tC_raw">0</span> 种颜色)</h2>
  <div id="lG_raw"></div>
 </div>
-<div class="leg" id="lA_ref" style="display:none">
+<div class="leg" id="lA_ref" style="display: none;">
  <h2>📊 精细版用量统计 (共 <span id="tB_ref">0</span> 颗，<span id="tC_ref">0</span> 种颜色)</h2>
  <div id="lG_ref"></div>
 </div>
 
 <canvas id="hC"></canvas>
+<div class="nbpop" id="nbPop"><div class="t"><b id="nbTitle"></b><span id="nbX">✕</span></div><div style="display: flex; gap: 4px; margin-bottom: 6px;"><button class="tgl" id="nbUndo" style="padding: 3px 8px; font-size: 11px;">↶ 撤销</button><button class="tgl" id="nbRedo" style="padding: 3px 8px; font-size: 11px;">↷ 重做</button><span id="nbUndoInfo" style="font-size: 10px; color: rgb(153, 153, 153); align-self: center;"></span></div><div class="nbg" id="nbGrid"></div><div class="t" style="margin-top: 6px;">候选颜色</div><div class="nbs" id="nbList"></div>
+<div class="nbb"><div class="t" style="margin-top: 8px;">🖌️ 画笔</div>
+<div class="nbbr"><div class="nbbsw" id="nbBrSw" title="点击：用画笔颜色填充此格"></div><span id="nbBrId"></span></div>
+<div class="nbmode"><label><input type="radio" name="nbM" value="apply" checked="">点色块=改此格</label><label><input type="radio" name="nbM" value="brush">点色块=设为画笔</label></div>
+<div style="display: flex; gap: 3px; margin-bottom: 4px;"><input type="text" id="nbBrIn" placeholder="输入色号 如 F5" style="width: 84px; padding: 3px 5px; border: 1px solid rgb(204, 204, 204); border-radius: 4px; font-size: 11px;"><button class="tgl" id="nbBrOk" style="padding: 3px 6px; font-size: 11px;">确定</button></div><div id="nbBrErr" style="color: rgb(231, 76, 60); font-size: 10px; min-height: 12px;"></div><button class="tgl nbbtn" id="nbCurBr">把此格颜色设为画笔</button></div></div>
 
 <script>
 const MARD=[
@@ -357,7 +919,7 @@ function renderTable(tblId,grid,rows,cols,cs,fs){
     if(y===rows-1)bb='2.5px solid rgba(0,0,0,0.75)';else if((y+1)%10===0)bb='2.5px solid rgba(0,0,0,0.75)';else if((y+1)%5===0)bb='1.5px solid rgba(0,0,0,0.4)';
     if(x%10===0)bl='2.5px solid rgba(0,0,0,0.75)';else if(x%5===0)bl='1.5px solid rgba(0,0,0,0.4)';
     if(x===cols-1)br='2.5px solid rgba(0,0,0,0.75)';else if((x+1)%10===0)br='2.5px solid rgba(0,0,0,0.75)';else if((x+1)%5===0)br='1.5px solid rgba(0,0,0,0.4)';
-    h+='<td style="background:rgb('+bd.r+','+bd.g+','+bd.b+');color:'+tc+';width:'+cs+'px;height:'+cs+'px;min-width:'+cs+'px;font-size:'+fs+'px;text-shadow:'+ts+';border-top:'+bt+';border-bottom:'+bb+';border-left:'+bl+';border-right:'+br+'">'+bd.id+'</td>';
+    h+='<td data-x="'+x+'" data-y="'+y+'" style="background:rgb('+bd.r+','+bd.g+','+bd.b+');color:'+tc+';width:'+cs+'px;height:'+cs+'px;min-width:'+cs+'px;font-size:'+fs+'px;text-shadow:'+ts+';border-top:'+bt+';border-bottom:'+bb+';border-left:'+bl+';border-right:'+br+'">'+bd.id+'</td>';
   }h+='</tr>';}
   tbl.innerHTML=h;
 }
@@ -452,7 +1014,8 @@ document.getElementById('genB').addEventListener('click',function(){
 });
 
 // ==================== Export function ====================
-function exportGrid(gd,filename){
+function axStep(){return parseInt(document.getElementById('axStep').value)||5;}
+function exportGrid(gd,filename){const st=axStep();
   if(!gd)return;
   const{grid,rows,cols,cs,fs}=gd;
   const cCnt={};
@@ -462,7 +1025,7 @@ function exportGrid(gd,filename){
   for(const[id,cnt]of sorted){const s=id.replace(/[0-9]/g,'');if(!byS[s])byS[s]=[];byS[s].push({id,cnt});}
   for(const s in byS)byS[s].sort((a,b)=>parseInt(a.id.slice(1))-parseInt(b.id.slice(1)));
 
-  const gridW=cols*cs,canvasW=Math.max(gridW+40,700),legPad=20,topPad=cs*2;
+  const labW=Math.max(cs*1.4,24),gridW=cols*cs,canvasW=Math.max(gridW+labW*2+20,700),legPad=20,topPad=cs*2+labW;
   const legItemW=135,legItemH=20;
   let legTotalH=0;
   for(const s of['A','B','C','D','E','F','G','H','M']){
@@ -471,11 +1034,11 @@ function exportGrid(gd,filename){
     legTotalH+=24+Math.ceil(byS[s].length/lc)*legItemH+8;
   }
   legTotalH+=50;
-  const totalH=topPad+rows*cs+legTotalH+30;
+  const totalH=topPad+rows*cs+labW+legTotalH+30;
   const ec=document.createElement('canvas');ec.width=canvasW;ec.height=totalH;
   const ctx=ec.getContext('2d');
   ctx.fillStyle='#fff';ctx.fillRect(0,0,canvasW,totalH);
-  const ox=Math.max(0,(canvasW-gridW)/2);
+  const ox=Math.max(labW,(canvasW-gridW)/2);
 
   for(let y=0;y<rows;y++)for(let x=0;x<cols;x++){
     const bd=grid[y][x],px=ox+x*cs,py=topPad+y*cs;
@@ -502,7 +1065,16 @@ function exportGrid(gd,filename){
     ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.fillText(bd.id,ox+x*cs+cs/2,topPad+y*cs+cs/2);
   }
-  let curY=topPad+rows*cs+16;
+  // Row / column coordinates
+  const lf=Math.max(9,Math.min(14,Math.round(cs*0.42)));
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  for(let x=0;x<cols;x++){const n=x+1,major=n%5===0;if(n%st!==0)continue;
+    ctx.fillStyle=major?'#000':'#888';ctx.font=(major?'bold ':'')+lf+'px system-ui,sans-serif';
+    const cx=ox+x*cs+cs/2;ctx.fillText(n,cx,topPad-labW/2);ctx.fillText(n,cx,topPad+rows*cs+labW/2);}
+  for(let y=0;y<rows;y++){const n=y+1,major=n%5===0;if(n%st!==0)continue;
+    ctx.fillStyle=major?'#000':'#888';ctx.font=(major?'bold ':'')+lf+'px system-ui,sans-serif';
+    const cy=topPad+y*cs+cs/2;ctx.fillText(n,ox-labW/2,cy);ctx.fillText(n,ox+cols*cs+labW/2,cy);}
+  let curY=topPad+rows*cs+labW+16;
   ctx.fillStyle='#222';ctx.font='bold 14px system-ui,sans-serif';
   ctx.textAlign='left';ctx.textBaseline='top';
   ctx.fillText('MARD 拼豆用量统计 — 共 '+(rows*cols)+' 颗，'+sorted.length+' 种颜色',legPad,curY);
@@ -532,19 +1104,210 @@ function exportGrid(gd,filename){
 
 document.getElementById('expB').addEventListener('click',function(){exportGrid(gridDataRef,'MARD_refined.png');});
 document.getElementById('expB2').addEventListener('click',function(){exportGrid(gridDataRaw,'MARD_raw.png');});
-</script>
 
-<!-- ===== 注册 Service Worker ===== -->
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('./sw.js')
-      .then(function(reg) { console.log('SW registered:', reg.scope); })
-      .catch(function(err) { console.log('SW failed:', err); });
-  });
+// ==================== Manual cell editing ====================
+let brush=MARD_MAP['H7'],editOn=false,painting=false;const undoStack=[];
+function activeTbl(){return document.querySelector('.tab-btn.active').dataset.tab==='raw'?'pxG_raw':'pxG_ref';}
+function gdOf(t){return t==='pxG_raw'?gridDataRaw:gridDataRef;}
+function setBrush(b){brush=b;document.getElementById('brSw').style.background='rgb('+b.r+','+b.g+','+b.b+')';document.getElementById('brId').textContent=b.id+' '+b.n;
+  document.querySelectorAll('.pchip').forEach(c=>c.classList.toggle('sel',c.dataset.id===b.id));}
+function buildPalette(){
+  const q=document.getElementById('palQ').value.trim().toUpperCase();
+  const gd=gdOf(activeTbl());const used=new Set();
+  if(gd)gd.grid.forEach(r=>r.forEach(c=>used.add(c.id)));
+  let h='';
+  for(const s of['A','B','C','D','E','F','G','H','M']){
+    const list=MARD.filter(c=>c.id.replace(/[0-9]/g,'')===s&&(!q||c.id.includes(q)));
+    if(!list.length)continue;
+    h+='<div class="pal-s"><b>'+s+'</b>';
+    for(const c of list)h+='<div class="pchip'+(c.id===brush.id?' sel':'')+(used.has(c.id)?' used':'')+'" data-id="'+c.id+'" title="'+c.id+' '+c.n+'" style="background:rgb('+c.r+','+c.g+','+c.b+');color:'+tC(c.r,c.g,c.b)+'">'+c.id+'</div>';
+    h+='</div>';
+  }
+  document.getElementById('palBox').innerHTML=h;
 }
-</script>
-<!-- ===== Service Worker 注册结束 ===== -->
+document.getElementById('palBox').addEventListener('click',e=>{const c=e.target.closest('.pchip');if(c)setBrush(MARD_MAP[c.dataset.id]);});
+document.getElementById('palQ').addEventListener('input',buildPalette);
+function paintTd(t,x,y,b){const td=document.getElementById(t).rows[y].cells[x];
+  td.style.background='rgb('+b.r+','+b.g+','+b.b+')';td.style.color=tC(b.r,b.g,b.b);td.style.textShadow=tS(b.r,b.g,b.b);td.textContent=b.id;}
+function refreshStats(t){const gd=gdOf(t);
+  if(t==='pxG_raw')buildLegend(gd.grid,gd.rows,gd.cols,'lG_raw','tB_raw','tC_raw');
+  else buildLegend(gd.grid,gd.rows,gd.cols,'lG_ref','tB_ref','tC_ref');
+  buildPalette();}
+function setCell(t,x,y,b,batch){const gd=gdOf(t);const old=gd.grid[y][x];if(old.id===b.id)return false;
+  batch.push({x,y,old});gd.grid[y][x]=b;paintTd(t,x,y,b);return true;}
+function commit(t,batch){if(batch.length){undoStack.push({t,batch});refreshStats(t);}}
+let dragBatch=null,dragStart=null,dragMoved=false;
+['pxG_raw','pxG_ref'].forEach(t=>{
+  const tbl=document.getElementById(t);
+  tbl.addEventListener('contextmenu',e=>{if(editOn)e.preventDefault();});
+  tbl.addEventListener('mousedown',e=>{
+    if(!editOn)return;const td=e.target.closest('td');if(!td)return;e.preventDefault();
+    const x=+td.dataset.x,y=+td.dataset.y,gd=gdOf(t);
+    if(e.button===2){setBrush(gd.grid[y][x]);return;}
+    if(e.shiftKey){const from=gd.grid[y][x].id,batch=[];
+      for(let yy=0;yy<gd.rows;yy++)for(let xx=0;xx<gd.cols;xx++)if(gd.grid[yy][xx].id===from)setCell(t,xx,yy,brush,batch);
+      commit(t,batch);return;}
+    painting=true;dragBatch=[];dragStart={x,y};dragMoved=false;
+  });
+  tbl.addEventListener('mouseover',e=>{
+    if(!editOn||!painting)return;const td=e.target.closest('td');if(!td)return;
+    const nx=+td.dataset.x,ny=+td.dataset.y;
+    if(!dragMoved){if(dragStart&&nx===dragStart.x&&ny===dragStart.y)return;dragMoved=true;closeNb();setCell(t,dragStart.x,dragStart.y,brush,dragBatch);}
+    setCell(t,nx,ny,brush,dragBatch);
+  });
+});
+let lastDragLen=0;
+document.addEventListener('mouseup',()=>{if(painting){painting=false;if(!dragMoved&&dragStart&&!document.getElementById('nbInEdit').checked)setCell(activeTbl(),dragStart.x,dragStart.y,brush,dragBatch);lastDragLen=dragMoved?1:0;commit(activeTbl(),dragBatch);dragBatch=null;}});
+const redoStack=[];
+function undo(){const op=undoStack.pop();if(!op)return;redoStack.push(op);const gd=gdOf(op.t);
+  for(const c of op.batch){c.nw=gd.grid[c.y][c.x];gd.grid[c.y][c.x]=c.old;paintTd(op.t,c.x,c.y,c.old);}refreshStats(op.t);if(typeof refreshNbAfterUndo==='function')refreshNbAfterUndo(op);}
+document.getElementById('undoB').addEventListener('click',undo);
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&!e.shiftKey&&e.key.toLowerCase()==='z'&&document.activeElement.tagName!=='INPUT'){e.preventDefault();undo();}});
+document.getElementById('editTgl').addEventListener('click',function(){
+  editOn=!editOn;this.classList.toggle('on',editOn);this.textContent=editOn?'✅ 编辑中（点击关闭）':'✏️ 开启编辑模式';
+  document.getElementById('pC').classList.toggle('editing',editOn);});
+document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',buildPalette));
+document.getElementById('genB').addEventListener('click',function(){
+  if(!gridDataRaw)return;undoStack.length=0;document.getElementById('editP').style.display='block';buildPalette();setBrush(brush);});
+setBrush(brush);
 
-</body>
-</html>
+// ==================== Neighbor candidate popup ====================
+let nbSel=null;
+const nbPop=document.getElementById('nbPop');
+function closeNb(){nbPop.style.display='none';if(nbSel){const td=document.getElementById(nbSel.t).rows[nbSel.y]?.cells[nbSel.x];if(td)td.classList.remove('selcell');}nbSel=null;}
+function chipHtml(c,cls,extra){return '<div class="'+cls+'" '+(extra||'')+' title="'+c.id+' '+c.n+'" style="background:rgb('+c.r+','+c.g+','+c.b+');color:'+tC(c.r,c.g,c.b)+'">'+c.id+'</div>';}
+function openNb(t,x,y,td){
+  closeNb();const gd=gdOf(t);const cur=gd.grid[y][x];nbSel={t,x,y};td.classList.add('selcell');
+  document.getElementById('nbTitle').textContent='格子 ('+(x+1)+','+(y+1)+') · 当前 '+cur.id;
+  let g='';const cand={};
+  for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){
+    const xx=x+dx,yy=y+dy;
+    if(dx===0&&dy===0){g+=chipHtml(cur,'nbc cur');continue;}
+    if(xx<0||yy<0||xx>=gd.cols||yy>=gd.rows){g+='<div class="nbc none">—</div>';continue;}
+    const c=gd.grid[yy][xx];g+=chipHtml(c,'nbc','data-id="'+c.id+'"');
+    if(c.id!==cur.id)cand[c.id]=(cand[c.id]||0)+1;
+  }
+  document.getElementById('nbGrid').innerHTML=g;
+  const ids=Object.keys(cand).sort((a,b)=>cand[b]-cand[a]);
+  document.getElementById('nbList').innerHTML=ids.length?ids.map(id=>chipHtml(MARD_MAP[id],'pchip','data-id="'+id+'"').replace('>'+id+'<','>'+id+'×'+cand[id]+'<')).join(''):'<span style="color:#999">周围都是同色</span>';
+  nbPop.style.display='block';
+  const r=td.getBoundingClientRect(),w=nbPop.offsetWidth,h=nbPop.offsetHeight;
+  let left=r.right+8,top=r.top;
+  if(left+w>innerWidth-4)left=r.left-w-8;
+  if(top+h>innerHeight-4)top=innerHeight-h-4;
+  nbPop.style.left=Math.max(4,left)+'px';nbPop.style.top=Math.max(4,top)+'px';
+}
+nbPop.addEventListener('click',e=>{
+  if(e.target.id==='nbX'){closeNb();return;}
+  const c=e.target.closest('[data-id]');if(!c||!nbSel)return;
+  const {t,x,y}=nbSel,batch=[];setCell(t,x,y,MARD_MAP[c.dataset.id],batch);commit(t,batch);closeNb();
+});
+['pxG_raw','pxG_ref'].forEach(t=>{
+  document.getElementById(t).addEventListener('click',e=>{
+    const td=e.target.closest('td');if(!td)return;
+    if(editOn&&(e.shiftKey||lastDragLen>0||!document.getElementById('nbInEdit').checked))return;
+    e.stopPropagation();
+    openNb(t,+td.dataset.x,+td.dataset.y,td);
+  });
+});
+document.addEventListener('click',e=>{if(nbSel&&!nbPop.contains(e.target)&&!e.target.closest('td'))closeNb();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNb();});
+document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',closeNb));
+
+document.getElementById('genB').addEventListener('click',closeNb);
+document.getElementById('pC').addEventListener('scroll',closeNb);
+window.addEventListener('scroll',closeNb);
+
+// ===== Brush inside popup =====
+function syncNbBrush(){const sw=document.getElementById('nbBrSw');if(!sw)return;sw.style.background='rgb('+brush.r+','+brush.g+','+brush.b+')';document.getElementById('nbBrId').textContent=brush.id;}
+const _setBrush=setBrush;setBrush=function(b){_setBrush(b);syncNbBrush();};
+syncNbBrush();
+nbPop.addEventListener('click',e=>{
+  if(!nbSel)return;
+  if(e.target.id==='nbBrSw'){e.stopImmediatePropagation();const{t,x,y}=nbSel,batch=[];setCell(t,x,y,brush,batch);commit(t,batch);closeNb();return;}
+  if(e.target.id==='nbCurBr'){e.stopImmediatePropagation();setBrush(gdOf(nbSel.t).grid[nbSel.y][nbSel.x]);return;}
+  const c=e.target.closest('[data-id]');
+  if(c&&document.querySelector('input[name=nbM]:checked').value==='brush'){e.stopImmediatePropagation();setBrush(MARD_MAP[c.dataset.id]);}
+},true);
+
+// ===== Type color code to set brush =====
+function codeToBead(v){v=(v||'').trim().toUpperCase().replace(/\s+/g,'');const m=v.match(/^([A-HM])0*(\d+)$/);return m?MARD_MAP[m[1]+m[2]]:null;}
+function applyCode(inp,err){const b=codeToBead(inp.value);
+  if(b){setBrush(b);if(err)err.textContent='';inp.value='';inp.blur();}
+  else if(err)err.textContent='无此色号';}
+const nbIn=document.getElementById('nbBrIn'),nbErr=document.getElementById('nbBrErr');
+nbIn.addEventListener('keydown',e=>{e.stopPropagation();if(e.key==='Enter')applyCode(nbIn,nbErr);if(e.key==='Escape')closeNb();});
+nbIn.addEventListener('input',()=>{nbErr.textContent='';});
+nbPop.addEventListener('click',e=>{if(e.target.id==='nbBrOk'){e.stopImmediatePropagation();applyCode(nbIn,nbErr);}},true);
+// Main panel search box: Enter = set brush
+const palQ=document.getElementById('palQ');palQ.placeholder='输入色号，回车设为画笔';
+palQ.addEventListener('keydown',e=>{if(e.key==='Enter'){const b=codeToBead(palQ.value);if(b){setBrush(b);palQ.value='';buildPalette();}else{palQ.style.borderColor='#e74c3c';setTimeout(()=>palQ.style.borderColor='',800);}}});
+
+// ===== Undo inside popup =====
+function updNbUndo(){const b=document.getElementById('nbUndo');if(!b)return;const n=undoStack.length;b.disabled=!n;b.style.opacity=n?1:.4;document.getElementById('nbUndoInfo').textContent=n?'可撤销 '+n+' 步':'无可撤销';}
+function refreshNbAfterUndo(op){
+  if(!nbSel)return;
+  if(op.t!==nbSel.t){updNbUndo();return;}
+  const{t,x,y}=nbSel;const td=document.getElementById(t).rows[y]?.cells[x];
+  if(td)openNb(t,x,y,td);else closeNb();
+}
+const _openNb=openNb;openNb=function(t,x,y,td){_openNb(t,x,y,td);updNbUndo();};
+const _commit=commit;commit=function(t,b){_commit(t,b);updNbUndo();};
+nbPop.addEventListener('click',e=>{if(e.target.id==='nbUndo'){e.stopImmediatePropagation();undo();closeNb();updUR();}},true);
+
+// ===== Redo =====
+function redo(){const op=redoStack.pop();if(!op)return;const gd=gdOf(op.t);
+  for(const c of op.batch){const nw=c.nw||brush;gd.grid[c.y][c.x]=nw;paintTd(op.t,c.x,c.y,nw);}
+  undoStack.push(op);refreshStats(op.t);refreshNbAfterUndo(op);updUR();}
+function updUR(){
+  updNbUndo();
+  const r=document.getElementById('nbRedo');if(r){r.disabled=!redoStack.length;r.style.opacity=redoStack.length?1:.4;}
+  const info=document.getElementById('nbUndoInfo');if(info)info.textContent='撤销 '+undoStack.length+' · 重做 '+redoStack.length;
+  const u=document.getElementById('undoB'),rb=document.getElementById('redoB');
+  u.disabled=!undoStack.length;u.style.opacity=undoStack.length?1:.5;
+  rb.disabled=!redoStack.length;rb.style.opacity=redoStack.length?1:.5;
+}
+const _commit2=commit;commit=function(t,b){if(b&&b.length)redoStack.length=0;_commit2(t,b);updUR();};
+const _openNb2=openNb;openNb=function(t,x,y,td){_openNb2(t,x,y,td);updUR();};
+document.getElementById('redoB').addEventListener('click',redo);
+document.getElementById('undoB').addEventListener('click',updUR);
+nbPop.addEventListener('click',e=>{
+  if(e.target.id==='nbRedo'){e.stopImmediatePropagation();redo();closeNb();}
+  else if(e.target.id==='nbUndo'){setTimeout(updUR,0);}
+},true);
+document.addEventListener('keydown',e=>{
+  if(document.activeElement.tagName==='INPUT')return;
+  const k=e.key.toLowerCase();
+  if((e.ctrlKey||e.metaKey)&&(k==='y'||(e.shiftKey&&k==='z'))){e.preventDefault();redo();}
+  else if((e.ctrlKey||e.metaKey)&&k==='z'){setTimeout(updUR,0);}
+});
+document.getElementById('genB').addEventListener('click',()=>{redoStack.length=0;updUR();});
+updUR();
+
+// ===== Coordinates in web preview =====
+function drawCoords(t){
+  const tbl=document.getElementById(t),w=document.getElementById('cw_'+t);
+  w.querySelectorAll('.cl').forEach(e=>e.remove());
+  if(!tbl.rows.length||!tbl.offsetWidth)return;
+  const tl=tbl.offsetLeft,tt=tbl.offsetTop,tw=tbl.offsetWidth,th=tbl.offsetHeight;
+  const fs=Math.max(9,Math.min(13,Math.round(tbl.rows[0].cells[0].offsetWidth*0.4)));
+  let h='';
+  const st=axStep();
+  const mk=(n,l,tp,wd,ht)=>n%st!==0?'':'<div class="cl'+(n%10===0?' mj':'')+'" style="left:'+l+'px;top:'+tp+'px;width:'+wd+'px;height:'+ht+'px;font-size:'+fs+'px;display:flex;align-items:center;justify-content:center">'+n+'</div>';
+  const r0=tbl.rows[0].cells;
+  for(let x=0;x<r0.length;x++){const c=r0[x],l=tl+c.offsetLeft,wd=c.offsetWidth;
+    h+=mk(x+1,l,tt-20,wd,18)+mk(x+1,l,tt+th+2,wd,18);}
+  for(let y=0;y<tbl.rows.length;y++){const c=tbl.rows[y].cells[0],tp=tt+c.offsetTop,ht=c.offsetHeight;
+    h+=mk(y+1,tl-28,tp,26,ht)+mk(y+1,tl+tw+2,tp,26,ht);}
+  w.insertAdjacentHTML('beforeend',h);
+}
+function drawAllCoords(){drawCoords('pxG_raw');drawCoords('pxG_ref');}
+const _renderTable=renderTable;renderTable=function(id,g,r,c,cs,fs){_renderTable(id,g,r,c,cs,fs);requestAnimationFrame(()=>drawCoords(id));};
+document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>requestAnimationFrame(drawAllCoords)));
+document.getElementById('genB').addEventListener('click',()=>requestAnimationFrame(drawAllCoords));
+window.addEventListener('resize',drawAllCoords);
+document.getElementById('axStep').addEventListener('change',drawAllCoords);
+</script>
+
+
+</body></html>
