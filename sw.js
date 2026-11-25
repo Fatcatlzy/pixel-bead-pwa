@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'my-app-v1';
+const CACHE_NAME = 'my-app-v2';
 
 // List all files you want to cache for offline use
 const ASSETS_TO_CACHE = [
